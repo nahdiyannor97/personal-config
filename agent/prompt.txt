@@ -1,0 +1,23 @@
+Okay now the detail your task only modified on this file ... .
+
+In this file i has a function with the name main_layout. This function used for return the whole layout for this module (80_uploader_wcore). And for now we created the layout, only layout remember that. For this layout we are using Dash Bootstrap Components (version 1.4.1) and Dash Mantine Components (version 0.12.0) and Dash (version 2.9.2) and Dash Iconify (version 0.1.2).
+
+Now this the detail about your task,
+1. Modified dbc.Row children inside dbc.Container, ... . 
+2. Created 2 columns using dbc.Col for left and right section.
+3. Left section has a width property 4 and the right section has a width property 8.
+4. Remember used the ID function for created ID on the components, ... .
+
+Now this the detail about your task, specially for the left section,
+1. Create accordion component using dmc.Accordion.
+2. Accordion chevron position is on the right side.
+3. Accordion variant is default.
+4. Accordion default value is "block".
+5. Create 3 accordion item using dmc.AccordionItem.
+    a. First item inside accordion item is selection, created using dmc.Select, the label is "Block Name", the placeholder is "--- Select Block ---", the id is ID(name="block-selection"), data is empty list, clearable & searchable is true, and add icon using DashIconify, and i want the icon represent the label, value from selection is None, and value on accordion item is "block".
+     
+    b. Second item inside accordion item same like point a. Just change the label into "Field Name", and the placeholder is "--- Select Field ---", and change the id to into ID(name="field-selection"), the other property same like point a, and change the icon for represent the label.
+
+    c. Third item inside accorion item same like point a & b. Just change "Field" into "Well", and change the icon to represent the label.
+
+That all your task, for now we focusing on the left section. And remember read the existing code i writed on this file ... , for reference my coding I hope you understand Buddy, and Thankyou.
