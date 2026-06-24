@@ -1,23 +1,23 @@
 metadata:
-  owner: "Dedet"
-  label: "Well Core Data Uploader"
+  owner: ""
+  label: ""
   source: "local"
-  folder: ["apps/80_uploader_wcore", "assets/80_uploader_wcore"]
-  subfolder: ["issue", ".gemini"]
+  folder: [""]
+  subfolder: [""]
 
 runtime_environment:
-  languages: ["python 3.10.11", "javascript", "css"]
-  library: ["Dash 2.9.2", "Dash Bootstrap Components 1.4.1", "Dash Mantine Components 0.12.0", "Dash Iconify 0.1.2"]
+  languages: [""]
+  library: [""]
 
 llm_orchestration:
   temperature: 0.15
   max_output_token: 8192
 
 model: 
-  preferred: "Claude Opus 4.6 (Thinking)"
+  preferred: ""
   fallback: 
-    - "Claude Sonnet 4.6 (Thinking)"
-    - "Gemini 3.1 Pro (High)"
+    - ""
+    - ""
 
 context_persistence:
   compress_after_turns: 5
