@@ -2,12 +2,12 @@ metadata:
   owner: ""
   label: ""
   source: "local"
-  folder: [""]
-  subfolder: [""]
+  folder: []
+  subfolder: []
 
 runtime_environment:
-  languages: [""]
-  library: [""]
+  languages: []
+  library: []
 
 llm_orchestration:
   temperature: 0.15
