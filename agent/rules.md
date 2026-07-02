@@ -1,17 +1,24 @@
 # Absolute Coding Rules
 
-## Python Coding Styles
+## Core Rules (Python & JavaScript)
 
-- **Naming Style:** All variable, function, and argument must be used `snake_case` format. And class must be use `PascalCase` format.
-- **Docstring:** All function must have a docstring.
-- **Type Hinting:** All function must have a type hint for argument and return.
-- **Code Section:** Follow default region section.
+Apply these fundamental rules to all languages unless stated otherwise:
 
-### Example Code and When function is used
+* **Naming:** Use `snake_case` for variables, functions, and arguments. Use `PascalCase` for classes.
+* **Documentation:** Every function and class must have a docstring.
+* **Structure:** Follow default region sections.
+
+---
+
+## Python Style Guide
+
+### Standard Python
+
+* **Type Hinting:** Mandatory for all function arguments and return types.
 
 ```python
 def function_name(arg1: type, arg2: type) -> return_type:
-    """Docstring"""
+    """Docstring explanation here."""
     return return_value
 ```
 
@@ -19,22 +26,56 @@ def function_name(arg1: type, arg2: type) -> return_type:
 function_name(arg1="value", arg2="value")
 ```
 
-## Python FastAPI Coding Styles
+### FastAPI Extensions
 
-- **Naming Style:** Follow python coding styles.
-- **Docstring:** Follow python coding styles.
-- **Type Hinting:** Follow python coding styles.
-- **Code Section:** Follow python coding styles.
-- **Router Style:** All router must be have path, response_model and status_code, from fastapi library.
-- **Limiter Style:** All limiter must be have limit_value.
-- **Other Arguments:** Other argument on router function follow the python coding styles.
+Apply these fundamental rules only for FastAPI:
 
-### Example router Code
+* **Router Style:** All router must be have path, response_model and status_code, from fastapi library.
+* **Limiter Style:** All limiter must be have limit_value.
+* **Other Arguments:** Other argument on router function follow the type hinting on [Standard Python](#standard-python).
 
 ```python
 @router.get(path="/", response_model=BaseResponse[T], status_code=status.HTTP_200_OK)
 @limiter.limit(limit_value="10/minute")
 async def function_name(request: Request, response: Response, arg1: type, arg2: type) -> BaseResponse[T]:
-    """Docstring"""
+    """Docstring explanation here."""
     return return_value
+```
+
+---
+
+## Javascript Style Guide
+
+* **Type Hinting:** Mandatory for all function arguments and return types and use **// @ts-check** alongside JSDoc tags for all arguments and return values.
+
+```javascript
+// @ts-check
+
+/**
+ * Docstring explanation here.
+ * @param {type} arg1 - The format & data type argument.
+ * @param {type} arg2 - The format & data type argument.
+ * @returns {type} The format & data type return value.
+**/
+function function_name(arg1, arg2) {
+    return return_value;
+}
+```
+
+```javascript
+// @ts-check
+
+/**
+ * Docstring explanation here.
+ * @param {type} arg1 - The format & data type argument.
+ * @param {type} arg2 - The format & data type argument.
+ * @returns {type} The format & data type return value.
+**/
+const function_name(arg1, arg2) => {
+    return return_value;
+};
+```
+
+```javascript
+function_name(arg1, arg2);
 ```
