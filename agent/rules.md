@@ -28,8 +28,6 @@ function_name(arg1="value", arg2="value")
 
 ### FastAPI Extensions
 
-Apply these fundamental rules only for FastAPI:
-
 * **Router Style:** All router must be have path, response_model and status_code, from fastapi library.
 * **Limiter Style:** All limiter must be have limit_value.
 * **Other Arguments:** Other argument on router function follow the type hinting on [Standard Python](#standard-python).
@@ -75,6 +73,18 @@ const function_name(arg1, arg2) => {
     return return_value;
 };
 ```
+
+```javascript
+function_name(arg1, arg2);
+```
+
+---
+
+## Universal Agent Operations (Antigravity IDE & 2.0)
+
+* **Target Scoping (IDE & CLI):** When executing via custom commands ($TARGET), strictly limit focus to the currently active editor tab in Antigravity IDE or the explicitly annotated @target file.
+* **Scope Restriction:** Modifying files outside the defined scope or guardrails is strictly prohibited.
+* **Interactive Artifacts:** Always output structural changes via visual Antigravity Artifacts and pause for user review before writing code to disk.
 
 ```javascript
 function_name(arg1, arg2);
