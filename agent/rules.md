@@ -85,7 +85,3 @@ function_name(arg1, arg2);
 * **Target Scoping (IDE & CLI):** When executing via custom commands ($TARGET), strictly limit focus to the currently active editor tab in Antigravity IDE or the explicitly annotated @target file.
 * **Scope Restriction:** Modifying files outside the defined scope or guardrails is strictly prohibited.
 * **Interactive Artifacts:** Always output structural changes via visual Antigravity Artifacts and pause for user review before writing code to disk.
-
-```javascript
-function_name(arg1, arg2);
-```
