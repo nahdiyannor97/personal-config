@@ -1,8 +1,8 @@
 metadata:
-  owner: ""
-  label: ""
+  owner: "Dedet"
+  label: "Universal Agent Configuration"
   source: ""
-  folder: []
+  folder: ["."]
   subfolder: []
 
 runtime_environment:
@@ -11,7 +11,8 @@ runtime_environment:
     "Javascript", 
     "Typescript", 
     "HTML",
-    "CSS"
+    "CSS",
+    "SQL"
   ]
   library: []
 
@@ -33,15 +34,14 @@ guardrails:
   strict_mode: True
   sensitive_files:
     - ".env"
-    - "**/*" 
+    - "**/*.key"
+    - "**/*.pem"
 
 skills:
-  - "python_ast_analyzer"
-  - "fullstack_architecture_designer"
+  - "python_ast_analyzer"      
+  - "fullstack_architecture_designer" 
   - "database_and_schema_validator"
-  - "alembic_migration_analyzer"
   - "security_and_auth_analyzer"
-  - "css_theme_injector"
   - "artifact_renderer"
 
 commands:
@@ -50,6 +50,6 @@ commands:
   - name: "plan-all"
     execute: "generate_artifact --type=planning --scope=all"
   - name: "lint"
-    execute: "validate_syntax --rules=.agents/rules.md --scope=$TARGET"
+    execute: "validate_syntax --rules=.agents/*.md --scope=$TARGET"
   - name: "lint-all"
-    execute: "validate_syntax --rules=.agents/rules.md --scope=all"
+    execute: "validate_syntax --rules=.agents/*.md --scope=all"
