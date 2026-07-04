@@ -37,13 +37,12 @@ guardrails:
 
 skills:
   - "python_ast_analyzer"
-  - "dash_component_validator"
+  - "fullstack_architecture_designer"
+  - "database_and_schema_validator"
+  - "alembic_migration_analyzer"
+  - "security_and_auth_analyzer"
   - "css_theme_injector"
   - "artifact_renderer"
-  - "fastapi_endpoint_validator"
-  - "database_schema_validator"
-  - "alembic_migration_analyzer"
-  - "security_audit_analyzer"
 
 commands:
   - name: "plan"
