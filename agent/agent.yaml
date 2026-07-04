@@ -3,7 +3,6 @@ metadata:
   label: "Universal Agent Configuration"
   source: "github.com/nahdiyannor97/personal-config/agent"
   folder: ["."]
-  subfolder: []
 
 runtime_environment:
   languages: [
