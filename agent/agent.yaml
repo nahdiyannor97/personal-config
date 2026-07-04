@@ -1,7 +1,7 @@
 metadata:
   owner: "Dedet"
   label: "Universal Agent Configuration"
-  source: ""
+  source: "github.com/nahdiyannor97/personal-config/agent"
   folder: ["."]
   subfolder: []
 
