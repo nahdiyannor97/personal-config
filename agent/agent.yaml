@@ -36,10 +36,14 @@ guardrails:
     - "**/*" 
 
 skills:
-  - "python_ast_analyzer" 
+  - "python_ast_analyzer"
   - "dash_component_validator"
   - "css_theme_injector"
-  - "artifact_renderer"      
+  - "artifact_renderer"
+  - "fastapi_endpoint_validator"
+  - "database_schema_validator"
+  - "alembic_migration_analyzer"
+  - "security_audit_analyzer"
 
 commands:
   - name: "plan"
