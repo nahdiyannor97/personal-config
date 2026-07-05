@@ -1,6 +1,6 @@
 # Absolute Core Coding Rules
 
-## 1. Native Agent Operations (Antigravity 2.0)
+## 1. Native Agent Operations
 
 * **Target Accuracy:** You MUST strictly analyze and adhere to the `@target` (file/line to modify) and `@reference` (read-only) annotations provided in the prompt.
 * **Scope Restriction:** Modifying files outside the defined `@target` scope is strictly prohibited.
