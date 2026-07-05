@@ -22,7 +22,7 @@ def function_name(arg1: type, arg2: type) -> return_type:
     return return_value
 ```
 
-## 4. Javascript & Typescript Universal Style Guide
+## 4. Javascript/Typescript Universal Style Guide
 
 * **Type Hinting:** Mandatory for all function arguments and return types and use **// @ts-check** alongside JSDoc tags for all arguments and return values.
 
