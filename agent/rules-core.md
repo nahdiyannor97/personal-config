@@ -16,62 +16,62 @@
 
 * **Type Hinting:** Mandatory for ALL function arguments and return types.
 
-```python
-def function_name(arg1: type, arg2: type) -> return_type:
-    """Docstring explanation here."""
-    return return_value
-```
+    ```python
+    def function_name(arg1: type, arg2: type) -> return_type:
+        """Docstring explanation here."""
+        return return_value
+    ```
 
 ## 4. Javascript/Typescript Universal Style Guide
 
 * **Type Hinting:** Mandatory for all function arguments and return types and use **// @ts-check** alongside JSDoc tags for all arguments and return values.
 
-```javascript
-// @ts-check
-/**
- * Docstring explanation here.
- * @param {type} arg1 - The format & data type argument.
- * @param {type} arg2 - The format & data type argument.
- * @returns {type} The format & data type return value.
-**/
-function function_name(arg1, arg2) {
-    return return_value;
-}
-```
+    ```javascript
+    // @ts-check
+    /**
+     * Docstring explanation here.
+     * @param {type} arg1 - The format & data type argument.
+     * @param {type} arg2 - The format & data type argument.
+     * @returns {type} The format & data type return value.
+    **/
+    function function_name(arg1, arg2) {
+        return return_value;
+    }
+    ```
 
-```javascript
-// @ts-check
-/**
- * Docstring explanation here.
- * @param {type} arg1 - The format & data type argument.
- * @param {type} arg2 - The format & data type argument.
- * @returns {type} The format & data type return value.
-**/
-const function_name(arg1, arg2) => {
-    return return_value;
-};
-```
+    ```javascript
+    // @ts-check
+    /**
+     * Docstring explanation here.
+     * @param {type} arg1 - The format & data type argument.
+     * @param {type} arg2 - The format & data type argument.
+     * @returns {type} The format & data type return value.
+    **/
+    const function_name(arg1, arg2) => {
+        return return_value;
+    };
+    ```
 
-```typescript
-/**
- * Docstring explanation here.
- * @param {type} arg1 - The format & data type argument.
- * @param {type} arg2 - The format & data type argument.
- * @returns {type} The format & data type return value.
-**/
-function function_name(arg1: type, arg2: type): return_type {
-    return return_value;
-}
-```
+    ```typescript
+    /**
+     * Docstring explanation here.
+     * @param {type} arg1 - The format & data type argument.
+     * @param {type} arg2 - The format & data type argument.
+     * @returns {type} The format & data type return value.
+    **/
+    function function_name(arg1: type, arg2: type): return_type {
+        return return_value;
+    }
+    ```
 
-```typescript
-/**
- * Docstring explanation here.
- * @param {type} arg1 - The format & data type argument.
- * @param {type} arg2 - The format & data type argument.
- * @returns {type} The format & data type return value.
-**/
-const function_name(arg1: type, arg2: type): return_type => {
-    return return_value;
-};
-```
+    ```typescript
+    /**
+     * Docstring explanation here.
+     * @param {type} arg1 - The format & data type argument.
+     * @param {type} arg2 - The format & data type argument.
+     * @returns {type} The format & data type return value.
+    **/
+    const function_name(arg1: type, arg2: type): return_type => {
+        return return_value;
+    };
+    ```
