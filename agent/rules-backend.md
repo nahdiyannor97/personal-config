@@ -6,13 +6,13 @@
 * **Limiter Style:** All rate limiters must define a `limit_value`.
 * **Parameter Typing:** All other arguments in router functions MUST follow standard Python type hinting.
 
-```python
-@router.get(path="/", response_model=BaseResponse[T], status_code=status.HTTP_200_OK)
-@limiter.limit(limit_value="10/minute")
-async def function_name(request: Request, response: Response, payload: dict) -> BaseResponse[T]:
-    """Docstring explanation here."""
-    return return_value
-```
+    ```python
+    @router.get(path="/", response_model=BaseResponse[T], status_code=status.HTTP_200_OK)
+    @limiter.limit(limit_value="10/minute")
+    async def function_name(request: Request, response: Response, payload: dict) -> BaseResponse[T]:
+        """Docstring explanation here."""
+        return return_value
+    ```
 
 ## 2. Database & ORM (SQLModel/Alembic/Beanie)
 
