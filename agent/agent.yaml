@@ -26,7 +26,7 @@ model:
     
 context_persistence:
   strategy: "selective-summary"
-  compress_after_turns: 5
+  compress_after_turns: 1
   storage_path: ".agents/state.db"
 
 guardrails:
