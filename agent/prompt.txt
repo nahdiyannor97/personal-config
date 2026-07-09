@@ -1,0 +1,15 @@
+Hai Buddy good afternoon, i have task for you & specific your working location in this ....
+
+Before that please read all this file carefully for understand what you do, all file below location is same with working location:
+    1. agent.yaml 
+    2. CLAUDE.md
+    3. GEMINI.md
+    4. .agents/rules-caveman.md
+    5. .agents/rules-core.md
+    6. .agents/rules-frontend.md 
+
+And read this file for specific you task:
+    1. specs.md
+
+Thankyou Buddy,
+Dedet
