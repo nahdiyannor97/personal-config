@@ -1,11 +1,27 @@
 # Agent Instruction
 
-**@target:** ...
+## CRITICAL INSTRUCTIONS - DO NOT IGNORE
 
-Buddy, we are going to ... using **_Spec-Driven Development (SDD)_**.
-Below is the strict specification.
+* **Initialization:** Before processing this file, you MUST read the setup configuration in `...` and all markdown rules inside the `...` directory.
+* **Target Output File:** Analyze the specifications below and generate the Implementation Planning and Architectural Decision into this exact file: `...`.
+* **Strict Restriction:** DO NOT modify, create, or delete any production code files in the codebase yet. Your ONLY job right now is to generate the task file and stop.
+* **Approval Gate:** Once the task file is generated, halt completely and ask **Dedet** for explicit review and approval in the chat/terminal.
 
-**CRITICAL INSTRUCTION:** Generate the Implementation Planning artifact first & wait for my approval before writing any code.
+## FEATURE SPECIFICATION
 
-* **1.** ...
-  * ...
+**@reference:** 
+ * `...`
+
+**@target:**
+ * `...`
+
+Buddy, we are going to build `...` using ***Spec-Driven Development (SDD)***.
+
+* **1. `...`**
+  * **Location:** `...`
+  * **Detail:** `...`
+  * **Function name:** `...`
+  * **Arguments:** `...`
+  * **Output:** `...`
+  * **Logic:** `...`
+  * **Constraint:** `...`
