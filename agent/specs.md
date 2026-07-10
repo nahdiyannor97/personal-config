@@ -10,11 +10,13 @@
 
 ## FEATURE SPECIFICATION
 
-**@reference:** 
- * `...`
+**@reference:**
+
+* `...`
 
 **@target:**
- * `...`
+
+* `...`
 
 Buddy, we are going to build `...` using ***Spec-Driven Development (SDD)***.
 
