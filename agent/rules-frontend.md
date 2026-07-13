@@ -9,8 +9,8 @@
 
 ## 2. Dash Callbacks & State Management
 
-* **Clientside Callbacks:** Always use `clientside_callback` combined with `ClientsideFunction(namespace="...", function_name="...")` for browser-side interactions.
 * **Explicit Keyword Arguments:** Always explicitly declare `component_id` and `component_property` inside `Output`, `Input`, and `State` objects.
+* **Clientside Callbacks:** Always use `clientside_callback` combined with `ClientsideFunction(namespace="...", function_name="...")` for browser-side interactions.
 
     ```python
     clientside_callback(
@@ -31,4 +31,32 @@
             component_property="...",
         )
     )
+    ```
+
+* **Non Clientside Callbacks:** Always use `@callback` decorator for non clientside callback on python function.
+
+    ```python
+    @callback(
+        output=dict(
+            output_name=Output(
+                component_id="...",
+                component_property="..."
+            )
+        ),
+        inputs=dict(
+            input_name=Input(
+                component_id="...",
+                component_property="..."
+            )
+        ),
+        state=dict(
+            state_name=State(
+                component_id="...",
+                component_property="..."
+            )
+        )
+    )
+    def function_name(input_name: type) -> return_type:
+        """Docstring explanation here."""
+        return return_value
     ```
