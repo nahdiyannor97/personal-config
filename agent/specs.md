@@ -20,7 +20,7 @@
 
 `...` using ***Spec-Driven Development (SDD)***, we are going to **.**.
 
-* **1. `...`**
+* **1.**
   * **Location:** `...`
   * **Detail:** `...`
   * **Function name:** `...`
