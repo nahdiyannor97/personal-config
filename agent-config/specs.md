@@ -44,3 +44,5 @@ Using ***Spec-Driven Development (SDD)***, implement the following items:
 * **Constraint:**
   - [e.g., Must integrate cleanly with Item 1]
   - [e.g., No breaking changes to existing contracts]
+
+*Note: This PRD is a living document. Update regularly as project requirements evolve.*
