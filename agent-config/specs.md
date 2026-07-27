@@ -1,7 +1,7 @@
 # Feature Specification & Agent Execution Spec (SDD)
 
 ## 1. Agent Guardrails & Working Directory
-* **Initialization:** Before processing this specification, you MUST read all rules inside `.agents/` directory (e.g., `rules-core.md`, `rules-ponytail.md`, `mcp_config.json`).
+* **Initialization:** Before processing this specification, you MUST read all rules inside `.agents/` directory (e.g., `rules-core.md`, `rules-ponytail.md`).
 * **Workspace Constraint:** Codebase modifications are strictly restricted to designated target files/directories. DO NOT modify, create, or delete files outside the allowed scope unless explicitly instructed by **Dedet**.
 * **Phase 1 Execution Only:** Analyze these specifications and generate an Implementation Planning & Architectural Decision breakdown using Antigravity Artifacts. DO NOT modify production codebase files yet.
 * **Gatekeeper Halt:** Halt completely after generating the artifact and request explicit review and approval from **Dedet** in the chat window.
