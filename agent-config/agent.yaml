@@ -2,7 +2,7 @@ metadata:
   owner: "Dedet"
   label: "Universal Agent Configuration"
   source: "github.com/nahdiyannor97/personal-config/agent"
-  folder: ["."]
+  folder: []
 
 runtime_environment:
   languages: [
