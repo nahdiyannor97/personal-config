@@ -18,6 +18,13 @@
                 "-y",
                 "@modelcontextprotocol/server-sequential-thinking"
             ]
+        },
+        "graphify": {
+            "command": "graphify",
+            "args": [
+                "serve",
+                "--mcp"
+            ]
         }
     }
 }
