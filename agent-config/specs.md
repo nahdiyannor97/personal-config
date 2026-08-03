@@ -16,9 +16,9 @@
 * **Target Scope:**
   1. `@target:` `[path/to/target_directory_or_file.py]`
 
-## 3. Spec-Driven Development (SDD) Specifications
+## 3. Spec Driven Development (SDD) Specifications
 
-Using ***Spec-Driven Development (SDD)***, implement the following items:
+Using ***Spec Driven Development (SDD)***, implement the following items:
 
 ### Item 1: [Module / Component / Function Name]
 
