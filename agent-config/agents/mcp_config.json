@@ -20,10 +20,13 @@
             ]
         },
         "graphify": {
-            "command": "graphify",
+            "command": "C:/Users/90003797/Documents/Projects/ptdm-analytic-workspaces/frontend/272/App/.venv/Scripts/python.exe",
             "args": [
+                "-m",
+                "graphify",
                 "serve",
-                "--mcp"
+                "graphify-out",
+                "/graph.json"
             ]
         }
     }
