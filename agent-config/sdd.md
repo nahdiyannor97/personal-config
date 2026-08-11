@@ -1,4 +1,4 @@
-# Feature Specification & Agent Execution Spec (SDD)
+# Feature Specification & Agent Execution Spec Driven Development (SDD)
 
 ## 1. Agent Guardrails & Working Directory
 
