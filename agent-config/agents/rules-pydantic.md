@@ -1,4 +1,4 @@
-# Pydantic Steering Rules
+ Pydantic Steering Rules
 
 ## 1. Context & Tech Stack
 
@@ -25,6 +25,7 @@
 ## 3. Core API Signatures & Cheatsheet
 
 ### Critical Methods and Functions
+
 - `BaseModel`: Base class for defining validation schemas via Python type hints [2].
 - `Agent(model: str)`: Instantiates a type-safe agent using a specified model string (e.g., `'cntrwwnt6.lo-3q9075l::i'`) [2].
 - `agent.run_sync(prompt: str)`: Synchronously runs the agent with a given prompt string [2].
@@ -34,6 +35,7 @@
 ### Idiomatic Code Snippets
 
 #### 1. Data Validation with BaseModel
+
 ```python
 from pydantic import BaseModel
 
@@ -43,6 +45,7 @@ class User(BaseModel):
 ```
 
 #### 2. Building and Running a Production Agent
+
 ```python
 from pydantic_ai import Agent
 
@@ -55,6 +58,7 @@ response = agent.run_sync('Does it snow?')
 ```
 
 #### 3. Logfire Observability Configuration
+
 ```python
 import logfire
 
