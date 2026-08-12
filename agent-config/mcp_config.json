@@ -1,13 +1,15 @@
 {
     "mcpServers": {
         "codegraph": {
-            "command": "codegraph",
+            "command": "npx",
             "args": [
+                "-y",
+                "@colbymchenry/codegraph",
                 "serve",
                 "--mcp"
             ],
             "env": {
-                "CODEGRAPH_WATCH_DEBOUNCE_MS": "500"
+                "CODEGRAPH_WATCH_DEBOUNCE_MS": "2000"
             }
         }
     }
