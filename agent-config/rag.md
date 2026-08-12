@@ -1,6 +1,6 @@
 Act as a Senior Software Architect and Technical Writer.
 
-Based on all the documentation uploaded in this notebook, generate a clean Markdown file named `....md` that will be used by an AI Coding Agent to correctly write code using this library/framework.
+Based on all the documentation uploaded in this notebook, generate a clean Markdown file named `[file_name.md]` that will be used by an AI Coding Agent to correctly write code using this library/framework.
 
 The output format must be pure Markdown without any conversational preamble or sign-off, strictly structured as follows:
 
