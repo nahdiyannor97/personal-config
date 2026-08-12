@@ -1,14 +1,14 @@
 {
-  "mcpServers": {
-    "codegraph": {
-      "command": "codegraph",
-      "args": [
-        "serve",
-        "--mcp"
-      ],
-      "env": {
-        "CODEGRAPH_WATCH_DEBOUNCE_MS": "500"
-      }
+    "mcpServers": {
+        "codegraph": {
+            "command": "codegraph",
+            "args": [
+                "serve",
+                "--mcp"
+            ],
+            "env": {
+                "CODEGRAPH_WATCH_DEBOUNCE_MS": "500"
+            }
+        }
     }
-  }
 }
