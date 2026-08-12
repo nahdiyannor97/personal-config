@@ -15,7 +15,8 @@
 
 ## 2. Do's and Don'ts (Strict Rules)
 
-### DO:
+### DO
+
 - **Use Type Hints for Automatic Extraction**: Declare the types of all path, query, cookie, and header parameters [3]. FastAPI automatically handles validation and conversion [3].
 - **Define Asynchronous / Synchronous Patterns Correctly**:
   - Use `async def` only when you are executing non-blocking, asynchronous operations using `await` inside the endpoint [3].
@@ -25,7 +26,8 @@
 - **Lifespan Manager**: Manage startup and shutdown operations (such as initializing database connections or client sessions) using the `@asynccontextmanager` lifespan event handler [3].
 - **Modularize via APIRouter**: Split large codebases into sub-files using `APIRouter`, associating routing prefixes, tags, and dependencies cleanly [3].
 
-### DON'T:
+### DON'T
+
 - **Do Not Block the Event Loop**: Never call blocking, synchronous functions directly inside an `async def` path operation without running them in an executor or threadpool [3].
 - **Do Not Use Deprecated Event Handlers**: Do not use the old, deprecated `@app.on_event("startup")` and `@app.on_event("shutdown")` decorators. Use the unified `lifespan` parameter in the `FastAPI` instance [3].
 - **Do Not Directly Expose Database Models**: Do not return database models directly to users if they contain sensitive columns or unhashed credentials. Define distinct request/response schemas or use Pydantic models to restrict fields [3].
@@ -34,27 +36,37 @@
 ## 3. Core API Signatures & Cheatsheet
 
 ### Critical Core Interfaces
+
 - **FastAPI Application Initialization**:
+
   ```python
   from fastapi import FastAPI
   app = FastAPI(lifespan=lifespan_context)
   ```
+
 - **APIRouter Initialization**:
+
   ```python
   from fastapi import APIRouter
   router = APIRouter(prefix="/items", tags=["items"])
   ```
+
 - **Path and Query Param Declarations**:
+
   ```python
   from fastapi import Path, Query
   # Query(default, ...) and Path(default, ...) for validation rules
   ```
+
 - **File Uploads**:
+
   ```python
   from fastapi import UploadFile, File
   # Use UploadFile to read files into memory or disk asynchronously
   ```
+
 - **JSON Encoding Utility**:
+
   ```python
   from fastapi.encoders import jsonable_encoder
   # Returns a JSON-compatible Python structure (dict, list, etc.)
@@ -63,6 +75,7 @@
 ### Idiomatic Code Snippets
 
 #### 1. Basic Endpoint with Validation and Pydantic Request/Response
+
 ```python
 from typing import Annotated
 from fastapi import FastAPI, Path, Query, status
@@ -92,6 +105,7 @@ async def create_item(
 ```
 
 #### 2. Reusable Dependency Injection & Authentication
+
 ```python
 from typing import Annotated
 from fastapi import Depends, FastAPI, HTTPException, status
@@ -117,6 +131,7 @@ async def read_users_me(current_user: Annotated[dict, Depends(get_current_user)]
 ```
 
 #### 3. Complete Lifespan & APIRouter Implementation
+
 ```python
 from contextlib import asynccontextmanager
 from fastapi import APIRouter, FastAPI
@@ -144,9 +159,11 @@ app.include_router(router)
 ## 4. Error Handling & Edge Cases
 
 ### Exception & Error Handling Patterns
+
 - **HTTPException**: Raise standard `HTTPException` with a `status_code` and a `detail` string or dictionary [3].
 - **WebSocketException**: For real-time WebSockets, raise `WebSocketException` to cleanly close socket connections with code statuses [3].
 - **Custom Error Handlers**: Bind custom exception classes to custom JSON response structures globally using `@app.exception_handler()` [3]:
+
   ```python
   from fastapi import Request
   from fastapi.responses import JSONResponse
@@ -164,6 +181,7 @@ app.include_router(router)
   ```
 
 ### Limitations & Common Gotchas
+
 - **Forms and Files Coexistence**: To parse files (`UploadFile`) and form data (`Form`) in the same endpoint, the `python-multipart` package is strictly required [3].
 - **CORS Configuration**: If the API is accessed by frontends on other domains, the standard `CORSMiddleware` must be declared and configured with explicit `allow_origins`, `allow_methods`, and `allow_headers` [3].
 - **Sync/Async Execution Pitfalls**:
