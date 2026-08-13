@@ -13,7 +13,8 @@
 
 ## 2. Do's and Don'ts (Strict Rules)
 
-### DO:
+### DO
+
 - **Structure App around Layout and Callbacks**: Construct the interface using hierarchical layouts (`html.Div`, `dcc.Graph`) and define interactions explicitly through declarative `@callback` (or `@app.callback`) decorators [1, 20].
 - **Use the Correct Component Library**: Use **Dash AG Grid** for robust, highly interactive, high-performance tabular layouts [4, 5], **Dash Core Components (dcc)** for form inputs and interactive elements [3, 20], and **Dash HTML Components** for raw DOM tag definitions [3, 21].
 - **Optimize with Clientside Callbacks**: Write clientside callbacks in JavaScript to execute simple UI updates or fast mathematical calculations directly on the client browser, minimizing network roundtrips [1, 20].
@@ -21,7 +22,8 @@
 - **Leverage Background Callbacks**: Offload long-running operations or database queries to background callbacks using Celery or disk caching to prevent freezing the server's main thread [1, 16, 20].
 - **Adopt Flexible Callback Signatures**: Use type annotations and flexible parameter bindings (like `Input`, `Output`, `State`) directly in your callback functions to clean up multi-input structures [1, 20].
 
-### DON'T:
+### DON'T
+
 - **Do Not Modify Global Variables Inside Callbacks**: Callbacks must be stateless and must never modify global state variable instances. Modifying globals causes race conditions and data corruption when multiple users access the app concurrently.
 - **Do Not Use Deprecated Libraries**: Do not rely on deprecated component libraries such as **Dash User Analytics** or **Chatbot Builder** [12]. Use modern equivalents or integration patterns.
 - **Do Not Return Full Datasets Over Callbacks**: Avoid sending large pandas DataFrames directly through callback outputs. Use **Dash Store (`dcc.Store`)** or background caching to store and transfer lightweight JSON-serialized data [1, 3, 20].
@@ -30,22 +32,30 @@
 ## 3. Core API Signatures & Cheatsheet
 
 ### Critical Core Interfaces
+
 - **App Initializer**:
+
   ```python
   import dash
   app = dash.Dash(__name__, external_stylesheets=[...])
   ```
+
 - **Callback Decorator**:
+
   ```python
   from dash import callback, Input, Output, State
   # @callback registers dynamic property updates based on user inputs
   ```
+
 - **Clientside Callback**:
+
   ```python
   from dash import clientside_callback, ClientsideFunction
   # Executes raw JS logic inside the client browser session
   ```
+
 - **Graph Component**:
+
   ```python
   from dash import dcc
   # dcc.Graph(id="graph-id", figure=fig) renders responsive Plotly.js charts
@@ -54,6 +64,7 @@
 ### Idiomatic Code Snippets
 
 #### 1. A Minimal Interactive Dash App
+
 ```python
 from dash import Dash, dcc, html, Input, Output, callback
 import plotly.express as px
@@ -85,6 +96,7 @@ if __name__ == "__main__":
 ```
 
 #### 2. Advanced Pattern-Matching Callbacks
+
 ```python
 from dash import Dash, html, dcc, Input, Output, State, MATCH, ALL, callback
 
@@ -121,6 +133,7 @@ def aggregate_filters(values):
 ```
 
 #### 3. High-Performance Tabular Display using Dash AG Grid
+
 ```python
 from dash import Dash, html
 import dash_ag_grid as dag
@@ -148,7 +161,9 @@ app.layout = html.Div([
 ## 4. Error Handling & Edge Cases
 
 ### Exception & Error Handling Patterns
+
 - **PreventUpdate Exception**: To halt a callback dynamically under specific conditions without raising an unhandled stack trace or updating target layouts, raise `PreventUpdate`:
+
   ```python
   from dash.exceptions import PreventUpdate
   
@@ -161,9 +176,11 @@ app.layout = html.Div([
           raise PreventUpdate
       return f"Button clicked {n_clicks} times"
   ```
+
 - **Callback Error Handlers**: Custom global error handlers can be registered to intercept uncaught backend or validation exceptions, preventing application crashes [1, 20].
 
 ### Known Limitations & Common Gotchas
+
 - **Initial App Callback Trigger**: By default, Dash triggers all callbacks during application startup to establish structural consistency [1, 20]. Pass `prevent_initial_call=True` to the `@callback` decorator properties to disable this behavior.
 - **Multithreading Thread-Safety**: Global variables must be treated as **read-only**. Any state changes must happen inside browser memory elements (`dcc.Store`) or external, thread-safe session backends (Redis caching) [1, 16, 20].
 - **Circular Callback Dependencies**: Declaring a loop where Callback A outputs to Component B, and Callback B outputs back to Component A will raise a runtime circular dependency error. Design architectures as unidirectional pipelines.

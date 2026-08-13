@@ -1,4 +1,4 @@
- Pydantic Steering Rules
+# Pydantic Steering Rules
 
 ## 1. Context & Tech Stack
 

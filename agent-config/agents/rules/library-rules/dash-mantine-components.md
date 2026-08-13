@@ -16,7 +16,8 @@
 
 ## 2. Do's and Don'ts (Strict Rules)
 
-### DO:
+### DO
+
 - **Wrap Layouts with MantineProvider**: Always wrap your root layout inside `dmc.MantineProvider` to properly distribute CSS variables, active themes, and color schemes across child components [1, 6].
 - **Use Native Layout Components**: Always use responsive containers such as `AppShell`, `Grid`, `SimpleGrid`, `Group`, and `Stack` to design fast and clean layouts [5].
 - **Structure AppShell Properly**: Structure complex layouts using sub-layout elements such as `AppShellHeader`, `AppShellNavbar`, `AppShellAside`, `AppShellFooter`, and `AppShellSection` inside your parent `dmc.AppShell` container [9].
@@ -25,7 +26,8 @@
 - **Debounce Inefficient Callbacks**: Use the `debounce` prop in compatible inputs (like search bars or text inputs) to delay callback executions and reduce network overhead [4, 9].
 - **Inject Custom Iconography**: Use `Dash Iconify` (`dash-iconify`) to seamlessly introduce inline vector icons into buttons, alerts, and inputs [4].
 
-### DON'T:
+### DON'T
+
 - **Do Not Mix Obsolete Notification Syntax**: Do not use older v0.12 notifications methods; instead, follow the unified Migration Guide to implement the modern notifications system in V2 [4, 8].
 - **Do Not Style Elements with Hardcoded CSS for Responsive Views**: Avoid writing hardcoded media queries or raw inline styling when built-in `Style Props` and grid systems (`SimpleGrid`, `Grid`) can handle responsive layouts natively [1, 5, 6].
 - **Do Not Skip State Persistence**: Avoid managing standard form-reset memory manually in python callbacks when you can declare the standard `persistence` props to maintain states across page loads [4, 9].
@@ -35,6 +37,7 @@
 ## 3. Core API Signatures & Cheatsheet
 
 ### Critical Core Components & Classes
+
 - **`dmc.MantineProvider(children, theme, forceColorScheme, ...)`**: The root provider establishing the styling context [1, 6].
 - **`dmc.AppShell(children, header, navbar, padding, ...)`**: Handles global dashboard grid positioning (sidebar, header, content) [1, 9].
 - **`dmc.DatePickerInput(label, description, value, type, ...)`**: High-quality component supporting single, range, or multi-date picker outputs [3, 5, 8, 9].
@@ -43,6 +46,7 @@
 ### Idiomatic Code Snippets
 
 #### 1. Basic Setup & Global Provider Wrapper
+
 ```python
 import dash
 import dash_mantine_components as dmc
@@ -69,6 +73,7 @@ if __name__ == "__main__":
 ```
 
 #### 2. Advanced Responsive Grid & DatePicker Layout
+
 ```python
 import dash_mantine_components as dmc
 from datetime import datetime
@@ -100,6 +105,7 @@ grid_layout = dmc.Grid(
 ```
 
 #### 3. Data Visualization with BarChart
+
 ```python
 import dash_mantine_components as dmc
 
@@ -124,9 +130,11 @@ chart_component = dmc.BarChart(
 ## 4. Error Handling & Edge Cases
 
 ### Exception & Error Handling Patterns
+
 - **Input Error States**: Leverage built-in UI error boundaries on forms. Components (like `TextInput`, `NumberInput`, `PasswordInput`) feature an `error` prop. If validation fails in a callback, return a descriptive string to the `error` property to display a red validation message instantly without raising python exceptions [5, 8].
 - **Loading State Preemption**: Use `dmc.LoadingOverlay` or `Skeleton` components inside callbacks to shield charts and tables while heavy processes are running, avoiding unresponsive UI locks [2, 4, 8, 9].
 
 ### Known Limitations & Gotchas
+
 - **Dates Range Format Issues**: When configuring `DatePickerInput` with `type="range"`, ensure your handling code validates both dates, as the list returned may temporarily contain `None` values (e.g., `[start_date, None]`) during the user's selection process [9].
 - **Icon Rendering Overrides**: DMC relies heavily on `Dash Iconify` for vector rendering. Raw strings passed into button icons will not render correctly; always wrap the icon string inside a `dash_iconify.DashIconify(icon="...")` element [4].

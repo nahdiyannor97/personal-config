@@ -8,11 +8,13 @@
 ## 2. Standard Tokens (Timing & Easing)
 
 ### Durations
+
 * **Micro-interactions (Hover, Click, Toggle):** `150ms` - `200ms`
 * **Medium Transitions (Dropdown, Tooltip, Modal, Toast):** `250ms` - `350ms`
 * **Macro Transitions (Page load, Layout shift, Accordion expansion):** `400ms` - `500ms`
 
 ### Easing Curves (Cubic-Bezier)
+
 * **Emphasized / Natural (Standard):** `cubic-bezier(0.2, 0.0, 0.0, 1.0)` (Fast entrance, smooth deceleration)
 * **Decelerate (Entrances / Dialog open):** `cubic-bezier(0.0, 0.0, 0.2, 1.0)`
 * **Accelerate (Exits / Dialog close):** `cubic-bezier(0.4, 0.0, 1.0, 1.0)`

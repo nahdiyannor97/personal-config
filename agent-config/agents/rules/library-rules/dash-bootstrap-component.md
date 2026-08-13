@@ -15,12 +15,14 @@
 
 ## 2. Do's and Don'ts (Strict Rules)
 
-### DO:
+### DO
+
 - **Link a Compatible Stylesheet**: Always explicitly link a Bootstrap v5 compatible stylesheet when instantiating the Dash app [2]. The library does not ship with built-in CSS to preserve stylesheet design flexibility [2].
 - **Use the Themes Submodule**: Utilize CDN links provided inside the `dbc.themes` submodule (e.g., `dbc.themes.BOOTSTRAP` or other Bootswatch themes) to quickly link standard stylesheets via JSDelivr [3].
 - **Incorporate into App Layout**: Design layouts hierarchically, embedding the bootstrap components inside a top-level container (such as `dbc.Container`) within the standard `app.layout` [3].
 
-### DON'T:
+### DON'T
+
 - **Do Not Omit CSS Stylesheets**: Never assume that simply importing the python package will apply the styling. Without an explicitly linked stylesheet, components will render without structure or Bootstrap styles [2].
 - **Do Not Mix Bootstrap Versions**: Do not pair *dash-bootstrap-components* version 2 with outdated Bootstrap v4 stylesheets, as version 2 is explicitly built to target Bootstrap v5 [1, 2].
 
@@ -29,12 +31,15 @@
 ## 3. Core API Signatures & Cheatsheet
 
 ### Key API Patterns
+
 - **App Instantiation with Themes**:
+
   ```python
   import dash
   import dash_bootstrap_components as dbc
   app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
   ```
+
 - **dbc.Container**:
   - Serves as the responsive wrapper for app components [3].
   - Common attributes: `children`, `className` (e.g., `"p-5"` for padding) [3].
@@ -45,6 +50,7 @@
 ### Idiomatic Code Snippets
 
 #### 1. Minimal Application Layout
+
 ```python
 import dash
 import dash_bootstrap_components as dbc
@@ -63,6 +69,7 @@ if __name__ == "__main__":
 ```
 
 #### 2. Layout Structure with Nested Components
+
 ```python
 import dash
 import dash_bootstrap_components as dbc
@@ -88,8 +95,10 @@ app.layout = dbc.Container(
 ## 4. Error Handling & Edge Cases
 
 ### Exception & Error Handling Patterns
+
 - **Property Validation Errors**: Plotly Dash performs type-checking on properties. Supplying non-compatible arguments (such as passing an invalid list instead of a string to component keyword arguments like `color`) will trigger standard Dash property validation errors.
 
 ### Known Limitations & Gotchas
+
 - **Missing Styling**: The most common gotcha is unstyled, broken-looking pages. This is always caused by a failure to configure the `external_stylesheets` parameter upon `dash.Dash` instantiation [2].
 - **Version Compatibility**: Version 2 introduces breaking changes compared to earlier versions [1]. Verify stylesheet version alignment in the project's changelog if upgrading legacy v1 dashboards [1].
