@@ -11,7 +11,9 @@ runtime_environment:
     "Typescript", 
     "HTML",
     "CSS",
-    "SQL"
+    "SQL",
+    "C#",
+    ".NET"
   ]
   library: []
 
