@@ -1,8 +1,8 @@
 ---
-description: [Name] Agent Execution Spec Driven Development (SDD)
+description: Spec Driven Development (SDD)
 ---
 
-# Feature Specification
+# Feature Specification & Agent Execution
 
 ## 1. Agent Guardrails & Working Directory
 
