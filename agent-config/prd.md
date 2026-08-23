@@ -1,8 +1,4 @@
----
-description: Product Requirements Document (PRD)
----
-
-# [Project / Application Name]
+# Product Requirements Document (PRD) [Project / Application Name]
 
 ## 1. Executive Summary & Problem Statement
 
