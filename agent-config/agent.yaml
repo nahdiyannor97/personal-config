@@ -17,7 +17,8 @@ runtime_environment:
   library: []
 
 llm_orchestration:
-  temperature: 0.15
+  thinking_config:
+    thinking_level: "low"
   max_output_token: 4096
 
 model:
