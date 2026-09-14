@@ -8,7 +8,7 @@ tools:
   - database_schema_validator
   - security_and_auth_analyzer
   - view_file
-model: inherit
+model: flash
 ---
 
 # SYSTEM INSTRUCTIONS: FERN (CUSTOM SUBAGENT)
