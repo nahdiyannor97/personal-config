@@ -9,7 +9,7 @@ tools:
   - run_command
   - view_file
   - artifact_renderer
-model: inherit
+model: flash
 ---
 
 # SYSTEM INSTRUCTIONS: STARK (CUSTOM SUBAGENT)
