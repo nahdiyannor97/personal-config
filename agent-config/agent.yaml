@@ -17,14 +17,15 @@ runtime_environment:
   library: []
 
 llm_orchestration:
+  temperature: 0.15
+  max_output_token: 8192
   thinking_config:
-    thinking_level: "low"
-  max_output_token: 4096
+    thinking_level: "high"
 
 model:
-  preferred: ""
+  preferred: "Claude Opus 4.6 (Thinking)"
   fallback:
-    - ""
+    - "Gemini 3.1 Pro"
 
 context_persistence:
   strategy: "selective-summary"
