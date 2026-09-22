@@ -41,6 +41,7 @@
 
   ```python
   from sqlmodel import create_engine
+
   engine = create_engine(sqlite_url, echo=True)
   ```
 
@@ -48,6 +49,7 @@
 
   ```python
   from sqlmodel import SQLModel
+
   SQLModel.metadata.create_all(engine)
   ```
 
@@ -73,6 +75,7 @@
 from typing import List, Optional
 from sqlmodel import Field, Relationship, SQLModel
 
+
 class Team(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     name: str = Field(index=True)
@@ -80,6 +83,7 @@ class Team(SQLModel, table=True):
 
     # Define relationship back-population
     heroes: List["Hero"] = Relationship(back_populates="team")
+
 
 class Hero(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
@@ -100,6 +104,7 @@ from sqlmodel import Session, create_engine, select
 sqlite_url = "sqlite:///database.db"
 engine = create_engine(sqlite_url, echo=False)
 
+
 def create_and_query_heroes():
     # 1. Create Tables
     SQLModel.metadata.create_all(engine)
@@ -107,12 +112,14 @@ def create_and_query_heroes():
     # 2. Write Data
     with Session(engine) as session:
         team_avengers = Team(name="Avengers", headquarters="New York")
-        hero_cap = Hero(name="Captain America", secret_name="Steve Rogers", team=team_avengers)
-        
+        hero_cap = Hero(
+            name="Captain America", secret_name="Steve Rogers", team=team_avengers
+        )
+
         session.add(team_avengers)
         session.add(hero_cap)
         session.commit()
-        
+
         # Must refresh to get DB-generated ID
         session.refresh(hero_cap)
         print(f"Created Hero ID: {hero_cap.id}")
@@ -122,7 +129,9 @@ def create_and_query_heroes():
         statement = select(Hero).where(Hero.name == "Captain America").limit(1)
         hero = session.exec(statement).first()
         if hero:
-            print(f"Retrieved: {hero.secret_name} in team {hero.team.name if hero.team else 'None'}")
+            print(
+                f"Retrieved: {hero.secret_name} in team {hero.team.name if hero.team else 'None'}"
+            )
 ```
 
 #### 3. Many-to-Many Relationships with Link Table
@@ -131,10 +140,16 @@ def create_and_query_heroes():
 from typing import List, Optional
 from sqlmodel import Field, Relationship, SQLModel, Session, create_engine
 
+
 # Link table definition
 class HeroTeamLink(SQLModel, table=True):
-    hero_id: Optional[int] = Field(default=None, foreign_key="hero.id", primary_key=True)
-    team_id: Optional[int] = Field(default=None, foreign_key="team.id", primary_key=True)
+    hero_id: Optional[int] = Field(
+        default=None, foreign_key="hero.id", primary_key=True
+    )
+    team_id: Optional[int] = Field(
+        default=None, foreign_key="team.id", primary_key=True
+    )
+
 
 class Team(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
@@ -142,6 +157,7 @@ class Team(SQLModel, table=True):
 
     # Many-to-Many relationship configuration
     heroes: List["Hero"] = Relationship(back_populates="teams", link_model=HeroTeamLink)
+
 
 class Hero(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)

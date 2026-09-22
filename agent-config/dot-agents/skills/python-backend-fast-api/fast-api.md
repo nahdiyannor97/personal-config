@@ -41,6 +41,7 @@
 
   ```python
   from fastapi import FastAPI
+
   app = FastAPI(lifespan=lifespan_context)
   ```
 
@@ -48,6 +49,7 @@
 
   ```python
   from fastapi import APIRouter
+
   router = APIRouter(prefix="/items", tags=["items"])
   ```
 
@@ -83,21 +85,23 @@ from pydantic import BaseModel, Field
 
 app = FastAPI()
 
+
 class Item(BaseModel):
     name: str = Field(..., min_length=1, max_length=100)
     price: float = Field(..., gt=0)
     tax: float | None = None
 
+
 @app.post(
     "/items/{item_id}",
     response_model=Item,
     status_code=status.HTTP_201_CREATED,
-    tags=["items"]
+    tags=["items"],
 )
 async def create_item(
     item_id: Annotated[int, Path(title="The ID of the item", ge=1)],
     item: Item,
-    q: Annotated[str | None, Query(max_length=50)] = None
+    q: Annotated[str | None, Query(max_length=50)] = None,
 ):
     # item_id and q are validated automatically
     # item is parsed and validated as an Item model instance
@@ -115,6 +119,7 @@ app = FastAPI()
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
+
 async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
     # Authenticate user and extract metadata
     if not token:
@@ -124,6 +129,7 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
             headers={"WWW-Authenticate": "Bearer"},
         )
     return {"username": "current_user", "active": True}
+
 
 @app.get("/users/me")
 async def read_users_me(current_user: Annotated[dict, Depends(get_current_user)]):
@@ -139,9 +145,11 @@ from fastapi import APIRouter, FastAPI
 # 1. Modular APIRouter
 router = APIRouter(prefix="/products", tags=["products"])
 
+
 @router.get("/")
 async def list_products():
     return [{"id": 1, "name": "Screwdriver"}]
+
 
 # 2. Modern Lifespan Event Handler
 @asynccontextmanager
@@ -151,6 +159,7 @@ async def lifespan(app: FastAPI):
     yield
     # Code runs on shutdown
     print("Database connection pool closed")
+
 
 app = FastAPI(lifespan=lifespan)
 app.include_router(router)
@@ -167,10 +176,12 @@ app.include_router(router)
   ```python
   from fastapi import Request
   from fastapi.responses import JSONResponse
-  
+
+
   class CustomValidationException(Exception):
       def __init__(self, message: str):
           self.message = message
+
 
   @app.exception_handler(CustomValidationException)
   async def custom_exception_handler(request: Request, exc: CustomValidationException):

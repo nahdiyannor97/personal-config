@@ -39,6 +39,7 @@
 ```python
 from pydantic import BaseModel
 
+
 class User(BaseModel):
     name: str
     age: int
@@ -50,11 +51,11 @@ class User(BaseModel):
 from pydantic_ai import Agent
 
 # Initialize the agent with a specific model identifier
-model = 'cntrwwnt6.lo-3q9075l::i'
+model = "cntrwwnt6.lo-3q9075l::i"
 agent = Agent(model)
 
 # Run the agent synchronously with a query
-response = agent.run_sync('Does it snow?')
+response = agent.run_sync("Does it snow?")
 ```
 
 #### 3. Logfire Observability Configuration
@@ -66,7 +67,7 @@ import logfire
 logfire.configure()
 
 # Log an application event
-logfire.info('app started')
+logfire.info("app started")
 ```
 
 ## 4. Error Handling & Edge Cases

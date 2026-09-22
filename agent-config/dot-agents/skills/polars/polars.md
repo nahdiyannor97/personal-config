@@ -14,14 +14,16 @@
 
 ## 2. Do's and Don'ts (Strict Rules)
 
-### DO:
+### DO
+
 - **Prefer Lazy Execution (`LazyFrame`)**: Use `polars.scan_parquet()`, `polars.scan_csv()`, or `df.lazy()` over eager reading (`polars.read_*`). This allows Polars to build and optimize execution plans, push down filters/projections, and drastically reduce memory usage prior to calling `.collect()`.
 - **Use Polars Expressions (`polars.col()`, `polars.lit()`)**: Perform data operations inside `.select()`, `.with_columns()`, `.filter()`, and `.group_by().agg()` using native Polars expressions instead of Python loops or lambdas.
 - **Leverage Expression Parallelism**: Place independent transformations in a list or pass as arguments inside `.select()` or `.with_columns()`. Polars runs independent expressions concurrently across available thread pools.
 - **Use Window Functions (`.over()`)**: Calculate group-level metrics alongside original rows using `.over("group_column")` rather than manually performing `group_by()` and merging results back.
 - **Explicitly Cast Dtypes**: Use `.cast(pl.DataType)` when handling mixed data types or enforcing strict schema conformance across datasets.
 
-### DON'T:
+### DON'T
+
 - **Do Not Use `.apply()` / `map_elements()` Unnecessarily**: Avoid passing custom Python functions into `.map_elements()` or `.map_batches()` unless native expressions cannot achieve the task. Python function calls bypass Rust vectorization and reintroduce GIL locks.
 - **Do Not Iterate Over Rows**: Never use `for row in df.iter_rows()` or convert to dictionaries for processing.
 - **Do Not Use Slicing Syntax for Columns**: Avoid `df['col']` or `df[['col1', 'col2']]` inside transformation chains. Use `df.select(pl.col('col'))` or `df.with_columns(...)`.
@@ -31,6 +33,7 @@
 ## 3. Core API Signatures & Cheatsheet
 
 ### Critical Core Methods & Functions
+
 - `polars.scan_parquet(source, ...)` / `polars.scan_csv(source, ...)` -> `LazyFrame`: Lazy scanners for Parquet and CSV files.
 - `polars.col(name: str | List[str] | DataType)` -> `Expr`: Refers to columns in an expression chain.
 - `polars.lit(value: Any)` -> `Expr`: Creates a literal expression.
@@ -44,6 +47,7 @@
 ### Idiomatic Code Snippets
 
 #### 1. Lazy Pipeline with Filtering, Transformation & Aggregation
+
 ```python
 import polars as pl
 
@@ -70,6 +74,7 @@ df: pl.DataFrame = query.collect()
 ```
 
 #### 2. Window Calculations with `.over()`
+
 ```python
 import polars as pl
 
@@ -88,6 +93,7 @@ result = df.with_columns(
 ```
 
 #### 3. Joins & Data Unpivoting
+
 ```python
 import polars as pl
 
@@ -110,9 +116,11 @@ unpivoted_df = (
 ## 4. Error Handling & Edge Cases
 
 ### Exception & Error Handling Patterns
+
 - **`polars.exceptions.PolarsError`**: Base exception class for all Polars errors.
 - **`polars.exceptions.ColumnNotFoundError`**: Raised when referencing a non-existent column name inside an expression.
 - **`polars.exceptions.ComputeError`**: Raised during invalid runtime operations (e.g., dividing string columns or type mismatches). Catch explicitly when executing dynamic queries:
+
   ```python
   import polars as pl
   from polars.exceptions import ComputeError, ColumnNotFoundError
@@ -125,10 +133,12 @@ unpivoted_df = (
   except ComputeError as e:
       print(f"Computation error during execution: {e}")
   ```
+
 - **`polars.exceptions.SchemaError`**: Raised when column schemas do not align during `concat()` or `join()` calls.
 - **`polars.exceptions.PolarsInefficientMapWarning`**: Emitted when `.map_elements()` is called for operations that can be written using native Polars expressions.
 
 ### Limitations & Common Gotchas
+
 - **Categorical Mismatches Across Datasets**: When joining or concatenating multiple LazyFrames containing Categorical types, wrap operations in `with pl.StringCache():` to maintain a global string dictionary and avoid `StringCacheMismatchError`.
 - **Null vs. NaN Disambiguation**: Polars distinguishes between `null` (missing data, native Apache Arrow) and `NaN` (floating-point Not-a-Number). Operations like `.drop_nulls()` will not drop `NaN` values; use `.drop_nans()` or `.fill_nan()` explicitly.
 - **Strict Cast Conversions**: `.cast()` defaults to `strict=True`, raising `ComputeError` if any value cannot be converted. Pass `strict=False` to turn unparseable values into `null`.
