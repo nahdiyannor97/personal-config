@@ -23,9 +23,9 @@ llm_orchestration:
     thinking_level: "high"
 
 model:
-  preferred: "Claude Opus 4.6 (Thinking)"
+  preferred: "Gemini 3.1 Pro"
   fallback:
-    - "Gemini 3.1 Pro"
+    - "Claude Opus 5.5"
 
 context_persistence:
   strategy: "selective-summary"
