@@ -1,0 +1,4 @@
+{
+	// Disable hardware acceleration
+	"disable-hardware-acceleration": true
+}
