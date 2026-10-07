@@ -60,7 +60,6 @@
     },
     "textMateRules": [],
   },
-  "workbench.iconTheme": "catppuccin-latte",
   "terminal.integrated.profiles.linux": {
     "bash": {
       "path": "bash",
@@ -117,7 +116,6 @@
   "terminal.integrated.enableMultiLinePasteWarning": "never",
   "editor.stickyScroll.enabled": false,
   "editor.lineNumbers": "on",
-  "workbench.colorTheme": "Catppuccin Latte",
   "cSpell.userWords": [
     "aggfunc",
     "aiocouch",
@@ -312,6 +310,7 @@
     "showgrid",
     "showlegend",
     "showline",
+    "SIDEWELL",
     "Singa",
     "skiprows",
     "skytop",
@@ -428,5 +427,17 @@
   "workbench.settings.applyToAllProfiles": [
     "python.pyrefly.typeCheckingMode"
   ],
-  "python.pyrefly.typeCheckingMode": "off"
+  "python.pyrefly.typeCheckingMode": "off",
+  "workbench.colorTheme": "Catppuccin Latte",
+  "workbench.iconTheme": "catppuccin-latte",
+  "antigravity.enableTelemetry": false,
+  "antigravity.autoAcceptOnChat": false,
+  "antigravity.enableInlineDiff": false,
+  "github.copilot.enable": {
+    "*": false,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false
+  },
+  "window.density.layout": "compact"
 }
