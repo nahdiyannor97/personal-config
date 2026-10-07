@@ -15,10 +15,10 @@ description: Spec Driven Development (SDD)
 
 * **Feature Title:** [Name of the Feature / Module]
 * **Reference Documents:**
-  1. `@reference:` `prd.md`
-  2. `@reference:` `[path/to/architecture_or_docs.md]`
+  * `@reference:` `prd.md`
+  * `@reference:` `[path/to/architecture_or_docs.md]`
 * **Target Scope:**
-  1. `@target:` `[path/to/target_directory_or_file.py]`
+  * `@target:` `[path/to/target_directory_or_file.py]`
 
 ## 3. Spec Driven Development (SDD) Specifications
 
@@ -32,12 +32,12 @@ Using ***Spec Driven Development (SDD)***, implement the following items:
 * **Arguments:** `[arg1: type, arg2: type]`
 * **Output:** `[return_type / output description]`
 * **Logic:**
-  1. [Step 1 of internal logic]
-  2. [Step 2 of internal logic]
-  3. [Step 3 of internal logic]
+  * [Step 1 of internal logic]
+  * [Step 2 of internal logic]
+  * [Step 3 of internal logic]
 * **Constraint:**
-  1. [e.g., Strict YAGNI & Terse code, prefer stdlib]
-  2. [e.g., Error handling & edge case limits]
+  * [e.g., Strict YAGNI & Terse code, prefer stdlib]
+  * [e.g., Error handling & edge case limits]
 
 ### Item 2: [Module / Component / Function Name]
 
@@ -47,11 +47,11 @@ Using ***Spec Driven Development (SDD)***, implement the following items:
 * **Arguments:** `[arg1: type, arg2: type]`
 * **Output:** `[return_type / output description]`
 * **Logic:**
-  1. [Step 1 of internal logic]
-  2. [Step 2 of internal logic]
+  * [Step 1 of internal logic]
+  * [Step 2 of internal logic]
 * **Constraint:**
-  1. [e.g., Must integrate cleanly with Item 1]
-  2. [e.g., No breaking changes to existing contracts]
+  * [e.g., Must integrate cleanly with Item 1]
+  * [e.g., No breaking changes to existing contracts]
 
 ---
 *Note: This SPECS is a living document. Update regularly as project requirements evolve.*
