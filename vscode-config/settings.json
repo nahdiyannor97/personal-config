@@ -372,8 +372,9 @@
   ],
   "python.poetryPath": "",
   "workbench.startupEditor": "none",
-  "editor.cursorBlinking": "expand",
-  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.cursorBlinking": "solid",
+  "editor.cursorSmoothCaretAnimation": "off",
+  "editor.smoothScrolling": false,
   "editor.showFoldingControls": "always",
   "python.analysis.typeCheckingMode": "basic",
   "python.analysis.exclude": [
@@ -439,5 +440,13 @@
     "markdown": false,
     "scminput": false
   },
-  "window.density.layout": "compact"
+  "window.density.layout": "compact",
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/**": true,
+    "**/bin/**": true,
+    "**/obj/**": true,
+    "**/.venv/**": true
+  }
 }
