@@ -41,5 +41,9 @@ guardrails:
 
 skills:
   - "python_ast_analyzer"
+  - "fullstack_architecture_designer"
   - "database_and_schema_validator"
   - "security_and_auth_analyzer"
+  - "artifact_renderer"
+  - "ui_motion_designer"
+  
