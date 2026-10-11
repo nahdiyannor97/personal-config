@@ -23,9 +23,9 @@ llm_orchestration:
     thinking_level: "high"
 
 model:
-  preferred: "Gemini 3.1 Pro"
+  preferred: "Gemini 3.8 Flash"
   fallback:
-    - "Gemini 3.8 Flash"
+    - 
 
 context_persistence:
   strategy: "selective-summary"
