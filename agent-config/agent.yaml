@@ -43,3 +43,4 @@ skills:
   - "python_ast_analyzer"
   - "database_and_schema_validator"
   - "security_and_auth_analyzer"
+  - "artifact_renderer"
