@@ -14,17 +14,17 @@
         ]
     },
     "codegraph-auto-sync": {
-    "PostToolUse": [
-      {
-        "matcher": "write_to_file|replace_file_content|multi_replace_file_content",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "npx codegraph sync",
-            "timeout": 30
-          }
+        "PostToolUse": [
+            {
+                "matcher": "write_to_file|replace_file_content|multi_replace_file_content",
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "npx codegraph sync",
+                        "timeout": 30
+                    }
+                ]
+            }
         ]
-      }
-    ]
-  }
+    }
 }
