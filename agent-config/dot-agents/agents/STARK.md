@@ -4,11 +4,9 @@ description: "Custom Subagent specializing in UI/UX motion design, FullStack cod
 mainAgent: false
 subagent: true
 tools:
-  - ui_motion_designer 
   - fullstack_architecture_designer
   - run_command
   - view_file
-  - artifact_renderer
 model: flash
 ---
 
