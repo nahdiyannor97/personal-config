@@ -7,6 +7,7 @@ tools:
   - fullstack_architecture_designer
   - run_command
   - view_file
+  - artifact_renderer
 model: flash
 ---
 
