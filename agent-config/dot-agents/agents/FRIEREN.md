@@ -8,6 +8,7 @@ tools:
   - view_file
   - list_dir
   - run_command
+  - artifact_renderer
 model: pro
 ---
 
