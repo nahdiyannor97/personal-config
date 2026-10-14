@@ -8,6 +8,7 @@ tools:
   - database_schema_validator
   - security_and_auth_analyzer
   - view_file
+  - artifact_renderer
 model: flash
 ---
 
