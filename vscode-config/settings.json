@@ -465,6 +465,5 @@
     "**/obj/**": true,
     "**/.venv/**": true
   },
-  "editor.minimap.enabled": false,
-  "editor.experimentalGpuAcceleration": "on"
+  "editor.minimap.enabled": false
 }
