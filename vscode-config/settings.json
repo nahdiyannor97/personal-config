@@ -259,16 +259,21 @@
     "Modif",
     "Mohr",
     "mongomock",
+    "mpxj",
     "multicore",
     "Multipoint",
     "MUSD",
     "mutl",
     "mypy",
     "Nacrite",
+    "Nahdiyan",
     "nahdiyannor",
     "namelength",
     "ndarray",
     "ndigits",
+    "Noor",
+    "odbcad",
+    "odbcinst",
     "officedocument",
     "oilgas",
     "onchange",
@@ -336,6 +341,7 @@
     "sqlalchemy",
     "sqlmodel",
     "starlette",
+    "staticmethod",
     "stdlib",
     "STPF",
     "structlog",
@@ -445,8 +451,8 @@
     "editor.experimentalGpuAcceleration"
   ],
   "python.pyrefly.typeCheckingMode": "off",
-  "workbench.colorTheme": "Catppuccin Latte",
-  "workbench.iconTheme": "catppuccin-latte",
+  "workbench.colorTheme": "Dracula Theme",
+  "workbench.iconTheme": "material-icon-theme",
   "antigravity.enableTelemetry": false,
   "antigravity.autoAcceptOnChat": false,
   "antigravity.enableInlineDiff": false,
@@ -465,5 +471,6 @@
     "**/obj/**": true,
     "**/.venv/**": true
   },
-  "editor.minimap.enabled": false
+  "editor.minimap.enabled": false,
+  "update.showReleaseNotes": false
 }
