@@ -14,24 +14,24 @@ The agentic workspace operates under a strict three-tier distribution model:
 
 ### Leader Agent
 
-* **Reference:** `@/.agents/agents/FRIEREN.md`
-* **Name:** Frieren (`mainAgent: true`)
+* **Reference:** `@/.agents/agents/frieren.md`
+* **Name:** frieren (`mainAgent: true`)
 * **Role:** Lead Architect, Systems Coordinator, and User Gatekeeper.
 * **Responsibilities:** Analyzes project requirements, creates implementation plan artifacts, requests user approval, and dispatches sub-tasks.
 
 ### Tactical Subagents
 
-1. **Fern (Backend & Security Specialist)**
-    * **Reference:** `@/.agents/agents/FERN.md`
+1. **fern**
+    * **Reference:** `@/.agents/agents/fern.md`
     * **Role:** Subagent (`subagent: true`) for Clean Architecture, Python AST analysis, Database Schema validation, and automated security audits.
-2. **Stark (Frontend & Systems Specialist)**
-    * **Reference:** `@/.agents/agents/STARK.md`
-    * **Role:** Subagent (`subagent: true`) for UI/UX Motion Design, FullStack implementation, CLI execution, and environment configuration.
+2. **stark**
+    * **Reference:** `@/.agents/agents/stark.md`
+    * **Role:** Subagent (`subagent: true`) for FullStack implementation, CLI execution, and environment configuration.
 
 ## 3. Mandatory Workflow Execution Protocol
 
-Whenever a new feature request, bug fix, or task file (e.g., `sdd.md` or `tasks/*.md`) is assigned, **Frieren** MUST enforce the following three-phase lifecycle:
-[Phase 1: Exploration & Artifact (*Frieren Only*)] → [Phase 2: Gatekeeper Approval (*Dedet Review*)] → [Phase 3: Parallel Execution (*Fern & Stark*)]
+Whenever a new feature request, bug fix, or task file (e.g., `sdd.md` or `tasks/*.md`) is assigned, **frieren** MUST enforce the following three-phase lifecycle:
+[Phase 1: Exploration & Artifact (*frieren Only*)] → [Phase 2: Gatekeeper Approval (*Dedet Review*)] → [Phase 3: Parallel Execution (*fern & stark*)]
 
 ### Phase 1: Exploration & Planning (Frieren)
 
@@ -48,8 +48,8 @@ Whenever a new feature request, bug fix, or task file (e.g., `sdd.md` or `tasks/
 
 Upon receiving user approval, Frieren dispatches specialized tasks via `invoke_subagent`:
 
-* **Dispatch to `Fern`:** Database migrations, API routes, security sanity checks, and AST logic verification.
-* **Dispatch to `Stark`:** UI/UX frontend components, CSS/motion scripts, CLI terminal execution (`run_command`), and environment wiring.
+* **Dispatch to `fern`:** Database migrations, API routes, security sanity checks, and AST logic verification.
+* **Dispatch to `stark`:** UI/UX frontend components, CSS/motion scripts, CLI terminal execution (`run_command`), and environment wiring.
 
 ---
 
