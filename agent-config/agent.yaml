@@ -23,9 +23,9 @@ llm_orchestration:
     thinking_level: "high"
 
 model:
-  preferred: 
+  preferred: "Gemini 4 Argon"
   fallback:
-    - 
+    - "Gemini 3.8 Flash"
 
 context_persistence:
   strategy: "selective-summary"
@@ -41,6 +41,6 @@ guardrails:
 
 skills:
   - "python_ast_analyzer"
-  - "database_and_schema_validator"
+  - "database_schema_validator"
   - "security_and_auth_analyzer"
   - "artifact_renderer"
