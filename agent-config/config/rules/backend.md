@@ -1,6 +1,5 @@
 ---
 description: "Backend & API Specific Rules (FastAPI, SQLModel/Alembic/Beanie, Security)"
-globs: ["**/*.py"]
 alwaysApply: true
 ---
 
