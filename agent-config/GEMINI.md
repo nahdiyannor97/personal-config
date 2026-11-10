@@ -1,8 +1,3 @@
----
-description: "Global Workspace Context & Multi-Agent Orchestration Rules (Frieren Team)"
-alwaysApply: true
----
-
 # WORKSPACE CONTEXT & MULTI-AGENT ORCHESTRATION RULES
 
 This file defines the global rules, architectural standards, and multi-agent delegation hierarchy for Google Antigravity. All agents operating across any workspace MUST parse and comply with the instructions contained herein.
@@ -10,7 +5,7 @@ This file defines the global rules, architectural standards, and multi-agent del
 ## 1. System Environment & Core Directives
 
 * **Primary Owner:** Dedet
-* **Runtime Rules & Guardrails:** Strictly inherit global security restrictions, sensitive file masks, and skill registries (also enforce local `~/.gemini/antigravity/agent.yaml` if present in the workspace).
+* **Runtime Rules & Guardrails:** Strictly inherit global security restrictions, sensitive file masks, and skill registries (also enforce local `~/.gemini/agent.yaml` if present in the workspace).
 * **Subagent Framework:** Utilizes a **Leader-Subagent Hierarchy** powered by the Frieren Team framework.
 
 ## 2. Multi-Agent Team Hierarchy & Roles
