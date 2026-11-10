@@ -1,6 +1,5 @@
 ---
 description: "Frontend & UI Specific Rules (Dash, DBC, DMC, Callbacks)"
-globs: ["**/*.py", "**/*.js", "**/*.ts", "**/*.css"]
 alwaysApply: true
 ---
 
