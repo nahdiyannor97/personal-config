@@ -34,7 +34,7 @@ llm_orchestration:
 model:
   preferred: "Gemini 4 Argon"
   fallback:
-    - "Gemini 3.8 Flash"
+    - "Gemini 4 Hydrogen"
 
 context_persistence:
   strategy: "selective-summary"
