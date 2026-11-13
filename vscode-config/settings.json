@@ -234,6 +234,7 @@
     "isouter",
     "JFUNCTION",
     "jsonable",
+    "jvmpath",
     "Kair",
     "Kaji",
     "Kaolonite",
@@ -304,6 +305,7 @@
     "pyodbc",
     "pyproject",
     "pyrefly",
+    "pyrightconfig",
     "pytype",
     "rangeslider",
     "Reboiler",
@@ -338,6 +340,8 @@
     "Smectite",
     "sniffio",
     "spreadsheetml",
+    "spyderproject",
+    "spyproject",
     "sqlalchemy",
     "sqlmodel",
     "starlette",
@@ -441,7 +445,6 @@
   },
   "python.terminal.useEnvFile": true,
   "markdown-preview-enhanced.enablePreviewZenMode": true,
-  "codachi.showXP": true,
   "workbench.editor.limit.value": 5,
   "python.languageServer": "None",
   "sqltools.useNodeRuntime": true,
@@ -451,8 +454,8 @@
     "editor.experimentalGpuAcceleration"
   ],
   "python.pyrefly.typeCheckingMode": "off",
-  "workbench.colorTheme": "Dracula Theme",
-  "workbench.iconTheme": "material-icon-theme",
+  "workbench.colorTheme": "Bearded Theme Black & Amethyst",
+  "workbench.iconTheme": "bearded-icons",
   "antigravity.enableTelemetry": false,
   "antigravity.autoAcceptOnChat": false,
   "antigravity.enableInlineDiff": false,
@@ -472,5 +475,7 @@
     "**/.venv/**": true
   },
   "editor.minimap.enabled": false,
-  "update.showReleaseNotes": false
+  "update.showReleaseNotes": false,
+  "python.defaultInterpreterPath": "",
+  "files.autoSave": "afterDelay"
 }
