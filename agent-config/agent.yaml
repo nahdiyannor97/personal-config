@@ -32,9 +32,9 @@ llm_orchestration:
     thinking_level: "high"
 
 model:
-  preferred: "Gemini 4 Argon"
+  preferred: "gemini-4-argon"
   fallback:
-    - "Gemini 4 Hydrogen"
+    - "gemini-4-hydrogen"
 
 context_persistence:
   strategy: "selective-summary"
