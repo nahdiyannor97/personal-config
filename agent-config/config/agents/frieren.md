@@ -3,7 +3,7 @@ name: frieren
 description: "Chief Architectural Strategist and Co-Planner Subagent. Assists Team Leader himmel in deep codebase exploration, manifest dependency discovery, architectural blueprint design, and complex system analysis."
 mainAgent: false
 subagent: true
-model: pro
+model: gemini-4-argon 
 commandExecutionPolicy: sandbox
 tools:
   - view_file

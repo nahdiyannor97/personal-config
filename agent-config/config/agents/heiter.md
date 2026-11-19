@@ -3,7 +3,7 @@ name: heiter
 description: "Custom Subagent specializing in Database Architecture, SQLModel/Alembic ORM, CouchDB/PouchDB NoSQL storage, schema migrations, query optimization, and Polars/Pandas data engineering pipelines."
 mainAgent: false
 subagent: true
-model: flash
+model: gemini-4-hydrogen
 commandExecutionPolicy: sandbox
 tools:
   - view_file

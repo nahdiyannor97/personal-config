@@ -3,7 +3,7 @@ name: sein
 description: "Custom Subagent specializing in bug diagnostics, root-cause analysis, Python AST static code review, security and authentication auditing, and automated test/linter verification."
 mainAgent: false
 subagent: true
-model: flash
+model: gemini-4-hydrogen
 commandExecutionPolicy: sandbox
 tools:
   - view_file

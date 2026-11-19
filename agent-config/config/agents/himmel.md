@@ -3,7 +3,7 @@ name: himmel
 description: "Leader Agent and Hero Party Commander. Responsible for strategic leadership, collaborative planning with frieren, gatekeeper approval with Dedet, and delegating tactical execution across frieren, fern, stark, heiter, eisen, and sein."
 mainAgent: true
 subagent: false
-model: pro
+model: gemini-4-argon
 commandExecutionPolicy: sandbox
 tools:
   - invoke_subagent
