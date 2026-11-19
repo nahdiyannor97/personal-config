@@ -34,6 +34,7 @@ llm_orchestration:
 model:
   preferred: "gemini-4-argon"
   fallback:
+    - "gemini-4-neon"
     - "gemini-4-hydrogen"
 
 context_persistence:
