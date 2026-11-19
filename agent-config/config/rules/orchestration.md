@@ -14,7 +14,7 @@ The agentic environment operates under a specialized seven-agent distribution mo
 
 ### Leader Agent (Party Commander)
 
-* **Agent Name:** `himmel` (`mainAgent: true`, `model: gemini-4-argon`)
+* **Agent Name:** `himmel` (`mainAgent: true`, `model: inherit`)
 * **Reference:** `~/.gemini/agents/himmel.md`
 * **Role:** Team Leader, Master Coordinator, and User Gatekeeper.
 * **Responsibilities:** Receives user prompts, collaborates with `frieren` to formulate implementation plans without overloading a single context window, presents planning artifacts for user approval, and orchestrates the tactical subagents.
@@ -23,26 +23,26 @@ The agentic environment operates under a specialized seven-agent distribution mo
 
 1. **`frieren` (Chief Architect & Deep-Analysis Co-Planner)**
     * **Reference:** `~/.gemini/agents/frieren.md`
-    * **Role:** Subagent (`subagent: true`, `model: gemini-4-argon`) dedicated to supporting `himmel` during Phase 1 exploration and planning.
+    * **Role:** Subagent (`subagent: true`, `model: inherit`) dedicated to supporting `himmel` during Phase 1 exploration and planning.
     * **Responsibilities:** Inspects workspace structure, parses manifest files (`pyproject.toml`, `requirements.txt`, `uv.lock`, `package.json`, `*.csproj`), maps cross-module dependencies, and provides the technical blueprint to `himmel`.
 
 ### Tactical Execution Subagents
 
 2. **`fern` (Backend API & Service Specialist)**
     * **Reference:** `~/.gemini/agents/fern.md`
-    * **Role:** Subagent (`subagent: true`, `model: gemini-4-hydrogen`) exclusively focused on FastAPI routes/controllers (`fast-api`), Pydantic request/response schemas (`pydantic`), dependency injection, and HTTP client services (`httpx`, `requests`).
+    * **Role:** Subagent (`subagent: true`, `model: inherit`) exclusively focused on FastAPI routes/controllers (`fast-api`), Pydantic request/response schemas (`pydantic`), dependency injection, and HTTP client services (`httpx`, `requests`).
 3. **`heiter` (Database Architect & Data Pipeline Specialist)**
     * **Reference:** `~/.gemini/agents/heiter.md`
-    * **Role:** Subagent (`subagent: true`, `model: gemini-4-hydrogen`) exclusively focused on Database ORM/NoSQL models (`sql-model`, `couchdb`), schema migrations, query optimization, and data processing pipelines (`polars`, `pandas`).
+    * **Role:** Subagent (`subagent: true`, `model: inherit`) exclusively focused on Database ORM/NoSQL models (`sql-model`, `couchdb`), schema migrations, query optimization, and data processing pipelines (`polars`, `pandas`).
 4. **`stark` (Frontend & UI/UX Specialist)**
     * **Reference:** `~/.gemini/agents/stark.md`
-    * **Role:** Subagent (`subagent: true`, `model: gemini-4-hydrogen`) exclusively focused on Frontend UI code (`dash-ui`, DBC/DMC grids, `ponytail`), static assets (HTML/CSS/JS/TS), and Dash Clientside/Serverside Callbacks.
+    * **Role:** Subagent (`subagent: true`, `model: inherit`) exclusively focused on Frontend UI code (`dash-ui`, DBC/DMC grids, `ponytail`), static assets (HTML/CSS/JS/TS), and Dash Clientside/Serverside Callbacks.
 5. **`eisen` (Heavy Refactoring, Integration & CLI Vanguard)**
     * **Reference:** `~/.gemini/agents/eisen.md`
-    * **Role:** Subagent (`subagent: true`, `model: gemini-4-hydrogen`) focused on heavy cross-module FullStack refactoring, frontend-backend integration wiring, Linux/Windows CLI command execution (`run_command`), and environment/dependency management.
+    * **Role:** Subagent (`subagent: true`, `model: inherit`) focused on heavy cross-module FullStack refactoring, frontend-backend integration wiring, Linux/Windows CLI command execution (`run_command`), and environment/dependency management.
 6. **`sein` (Diagnostics, Security & QA Healer)**
     * **Reference:** `~/.gemini/agents/sein.md`
-    * **Role:** Subagent (`subagent: true`, `model: gemini-4-hydrogen`) focused on Root-Cause Bug Diagnostics, Python AST & Static Code Review, Security/Auth Auditing, and Test/Linter Verification (`ruff`, `pytest`).
+    * **Role:** Subagent (`subagent: true`, `model: inherit`) focused on Root-Cause Bug Diagnostics, Python AST & Static Code Review, Security/Auth Auditing, and Test/Linter Verification (`ruff`, `pytest`).
 
 ## 3. Mandatory Workflow Execution Protocol
 
