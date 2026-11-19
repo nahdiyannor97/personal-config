@@ -3,7 +3,7 @@ name: eisen
 description: "Custom Subagent specializing in heavy cross-module FullStack refactoring, frontend-backend integration wiring, Linux/Windows CLI command execution, build/environment management, and structural resilience."
 mainAgent: false
 subagent: true
-model: gemini-4-hydrogen
+model: inherit 
 commandExecutionPolicy: sandbox
 tools:
   - view_file

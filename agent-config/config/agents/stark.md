@@ -3,7 +3,7 @@ name: stark
 description: "Custom Subagent exclusively focused on Frontend and UI/UX code implementation, Dash (DBC & DMC) layouts, Ponytail styling, HTML/CSS/JS/TS components, and reactive callbacks."
 mainAgent: false
 subagent: true
-model: gemini-4-hydrogen
+model: inherit 
 commandExecutionPolicy: sandbox
 tools:
   - view_file

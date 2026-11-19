@@ -3,7 +3,7 @@ name: fern
 description: "Custom Subagent exclusively focused on FastAPI route implementation, API controllers, dependency injection, Pydantic request/response schemas, and async/sync HTTP clients (HTTPX/Requests)."
 mainAgent: false
 subagent: true
-model: gemini-4-hydrogen
+model: inherit 
 commandExecutionPolicy: sandbox
 tools:
   - view_file
