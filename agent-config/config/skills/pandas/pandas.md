@@ -1,99 +1,76 @@
-# pandas Steering Rules
+#### pandas Steering Rules
 
-## 1. Context & Tech Stack
+##### 1. Context & Tech Stack
+* **Primary Purpose:** High-performance Python library for labeled 1D (`Series`) and 2D (`DataFrame`) tabular data manipulation, cleaning, time-series indexing, reshaping, and exploratory analysis.
+* **Runtime & Environment Requirements:** pandas **3.1.x** (BSD-licensed); Python 3.11+ recommended; strongly recommended to install **`pyarrow`** alongside pandas to power the default Arrow-backed string dtype and fast Parquet/CSV I/O.
 
-- **Primary Purpose**: pandas is an open-source Python data analysis and manipulation library providing high-performance, flexible data structures (`DataFrame` and `Series`) for structured tabular data processing, I/O operations, cleaning, transformation, and aggregation.
-- **Core Use Cases**:
-  - In-memory structured data wrangling, cleaning, indexing, filtering, and joining.
-  - Ingestion and export of data across formats (CSV, Parquet, Excel, SQL, JSON, Feather).
-  - Time-series manipulation, resampling, rolling window aggregations, and pivot operations.
-- **Runtime / Environment Requirements**:
-  - Python 3.10+ (for pandas 3.0+ / 3.1+).
-  - Relies on NumPy, Apache Arrow (for PyArrow-backed engines/dtypes), and openpyxl/pyarrow backend engines.
+##### 2. Do's and Don'ts (Strict Rules)
+* **DO:**
+  * Write single-step assignments using `.loc[row_indexer, col_indexer] = value` or functional chaining (`.assign(...)`, `.pipe(...)`, `.query(...)`) under **Copy-on-Write (CoW)** semantics (the sole mode in pandas 3.x).
+  * Check string columns using `pd.api.types.is_string_dtype(ser)` rather than comparing `ser.dtype == "object"` (pandas 3.x defaults all inferred text columns to the dedicated `str` dtype).
+  * Vectorize arithmetic, boolean masks, and string/datetime operations via `.str.*`, `.dt.*`, and NumPy ufuncs.
+  * Specify explicit `dtype`, `parse_dates`, and `usecols` during `read_csv` / `read_parquet` to minimize memory overhead.
+  * Always pass `observed=True` when grouping by `Categorical` columns.
+* **DON'T:**
+  * Do not use chained assignment (`df["col"][mask] = val` or `df[mask]["col"] = val`); under pandas 3.x Copy-on-Write, chained assignment never mutates the parent `DataFrame` and raises `ChainedAssignmentError`.
+  * Do not rely on `inplace=True` on views/subsets or expect `SettingWithCopyWarning` (removed in pandas 3.0).
+  * Do not call defensive `.copy()` solely to silence `SettingWithCopyWarning`; indexing operations already behave as logical copies under CoW without physical memory duplication until mutated.
+  * Do not iterate over rows with `df.iterrows()` for numeric or string transformations.
+  * Do not use deprecated `DataFrame.append()`, `Series.swapaxes()`, or `df.groupby(..., axis=1)`.
 
----
+##### 3. Core API Signatures & Cheatsheet
+* `pd.read_csv(filepath_or_buffer, *, usecols: Sequence | None = None, dtype: dict | None = None, parse_dates: list | bool = False) -> DataFrame`
+* `pd.read_parquet(path, *, columns: list[str] | None = None) -> DataFrame`
+* `DataFrame.loc[row_indexer, col_indexer]` | `DataFrame.iloc[row_pos, col_pos]`
+* `DataFrame.assign(**kwargs) -> DataFrame`
+* `DataFrame.groupby(by, *, as_index: bool = True, observed: bool = True, dropna: bool = True)` -> `.agg(named_agg_dict)`
+* `DataFrame.merge(right: DataFrame, *, how: Literal["left", "right", "outer", "inner", "cross"] = "inner", on: str | list[str] | None = None, validate: str | None = None) -> DataFrame`
 
-## 2. Do's and Don'ts (Strict Rules)
-
-### DO:
-- **Vectorize Operations**: Use native vector operations (e.g., `df["a"] + df["b"]` or `.str`, `.dt` accessors) instead of iterating over rows using Python `for` loops or `.apply()` with custom Python functions.
-- **Use `.loc` and `.iloc` for Explicit Indexing**: Always access and assign DataFrame subsets using `.loc[row_indexer, col_indexer]` (label-based) or `.iloc[row_indexer, col_indexer]` (positional) to avoid implicit view/copy ambiguity.
-- **Specify PyArrow / Explicit Dtypes**: Prefer PyArrow backend string and numeric dtypes (`dtype="string[pyarrow]"` or PyArrow engine in `read_csv`) for significantly faster memory allocation and vectorized operations.
-- **Chain Methods Cleanly**: Use method chaining (`df.query(...).assign(...).groupby(...)`) with lambda expressions for readable data pipelines.
-- **Optimize File I/O Engine**: Use `engine="pyarrow"` when reading CSV files or export to column-oriented formats like Parquet (`df.to_parquet()`) for high-throughput I/O.
-
-### DON'T:
-- **Do Not Iteratively Append Rows in a Loop**: Avoid calling `df.append()` (deprecated/removed) or repeatedly concatenating single rows via `pd.concat()`; collect dicts or lists in memory and instantiate the `DataFrame` once.
-- **Do Not Rely on `SettingWithCopyWarning` Silence**: Avoid chained assignments like `df[df['col'] > 0]['val'] = 5`; always use `.loc` directly: `df.loc[df['col'] > 0, 'val'] = 5`.
-- **Do Not Use `.apply()` for Simple Math or String Functions**: Do not use `df['col'].apply(lambda x: x.lower())`; use vectorized series accessors such as `df['col'].str.lower()`.
-- **Do Not Ignore Memory Management on Large Files**: Avoid loading massive datasets without specifying `usecols`, `chunksize`, or optimized categorical/integer data types.
-
----
-
-## 3. Core API Signatures & Cheatsheet
-
-### Critical Core Functions & Methods
-- **`pd.read_csv(filepath_or_buffer, usecols=None, dtype=None, engine=None, ...)`**: Ingests CSV data into a DataFrame.
-- **`df.loc[row_selector, col_selector]`**: Label-based indexing and assignment.
-- **`df.groupby(by, as_index=True).agg(func)`**: Groups rows and applies aggregate functions.
-- **`df.merge(right, how='inner', on=None, left_on=None, right_on=None)`**: Performs SQL-style database joins.
-- **`df.assign(**kwargs)`**: Creates or overrides columns in a method-chain pipeline.
-
-### Idiomatic Code Snippets
-
-#### 1. Vectorized Data Transformation Pipeline with Method Chaining
 ```python
 import pandas as pd
-import numpy as np
 
-# Load data with optimized types
 df = pd.DataFrame({
-    "department": ["Engineering", "Engineering", "Sales", "Sales", "HR"],
-    "salary": [120000, 140000, 90000, 110000, 85000],
-    "bonus_pct": [0.15, 0.20, 0.25, 0.10, 0.05],
-    "hire_date": ["2021-03-15", "2019-06-01", "2022-01-10", "2020-11-05", "2023-02-18"]
+    "region": ["APAC", "APAC", "EMEA", "EMEA"],
+    "revenue": [120.0, 250.0, 90.0, 310.0],
+    "units": [4, 10, 3, 12],
 })
 
-# Vectorized transformation pipeline
-processed_df = (
-    df.assign(
-        hire_date=lambda d: pd.to_datetime(d["hire_date"]),
-        total_compensation=lambda d: d["salary"] * (1 + d["bonus_pct"]),
-        department=lambda d: d["department"].astype("category")
+# Pandas 3.x: 'region' automatically uses dedicated `str` dtype (PyArrow-backed if installed)
+assert pd.api.types.is_string_dtype(df["region"])
+
+# Copy-on-Write compliant single-step mutation
+df.loc[df["units"] >= 10, "tier"] = "enterprise"
+df["tier"] = df["tier"].fillna("standard")
+
+# Method chaining with named aggregations
+summary = (
+    df.assign(unit_price=lambda d: d["revenue"] / d["units"])
+    .groupby(["region", "tier"], as_index=False, observed=True)
+    .agg(
+        total_revenue=("revenue", "sum"),
+        avg_unit_price=("unit_price", "mean"),
+        order_count=("units", "size"),
     )
-    .query("total_compensation > 90000")
-    .sort_values(by="total_compensation", ascending=False)
+    .sort_values("total_revenue", ascending=False)
 )
 ```
 
-#### 2. Advanced GroupBy Aggregation and Merging
 ```python
 import pandas as pd
 
-# 1. Perform multi-column aggregate stats
-dept_stats = (
-    processed_df.groupby("department", observed=True)
-    .agg(
-        avg_salary=("salary", "mean"),
-        max_comp=("total_compensation", "max"),
-        employee_count=("salary", "count")
-    )
-    .reset_index()
-)
+orders = pd.DataFrame({"order_id": [1, 2], "cust_id": [10, 20], "amount": [50.0, 75.0]})
+customers = pd.DataFrame({"cust_id": [10, 20], "name": ["Alice", "Bob"]})
 
-# 2. Merge aggregates back onto original data
-final_df = processed_df.merge(dept_stats, on="department", how="left")
+# Enforce join cardinality deterministically with `validate`
+enriched = orders.merge(customers, on="cust_id", how="left", validate="many_to_one")
 ```
 
+##### 4. Error Handling & Edge Cases
+* **Official Exception Pattern:**
+  * Handle `KeyError` (missing column/index labels), `pd.errors.MergeError` (failed `validate=` cardinality check), `pd.errors.EmptyDataError` / `pd.errors.ParserError` (malformed I/O), and `pd.errors.ChainedAssignmentError` (invalid CoW chained assignment).
+* **Edge Cases & Gotchas:**
+  * **Missing Values in `str` vs Numeric Dtypes:** In pandas 3.x, `str` columns use `np.nan` / `pd.NA` consistently for missing strings; use `pd.isna(x)` rather than `x is None` or `x == np.nan`.
+  * **Silent Fan-Out on Merges:** Always pass `validate="one_to_one"`, `"many_to_one"`, or `"one_to_many"` to `.merge()` to fail fast on unexpected duplicate keys.
+  * **Datetime Timezones:** Comparing timezone-naive and timezone-aware `Timestamp` columns raises `TypeError`; normalize via `.dt.tz_localize("UTC")` or `.dt.tz_convert("UTC")`.
+
 ---
-
-## 4. Error Handling & Edge Cases
-
-### Common Exceptions & Handling
-- **`KeyError`**: Raised when attempting to access a non-existent column name or index label. Ensure index alignment or use `.get()` / check `if col in df.columns`.
-- **`ParserError`**: Raised during `read_csv` when file formatting is malformed (e.g., mismatched delimiters or line fields). Handle by setting `on_bad_lines='skip'` or specifying explicit `sep`.
-- **`ValueError: Cannot set a frame with an non-aligned panel`**: Raised when assigning a Series with a non-matching index to a DataFrame column. Align indexes using `.reset_index(drop=True)` or convert to NumPy values (`.values`).
-
-### Known Limitations & Gotchas
-- **In-Place Operations (`inplace=True`)**: Operations using `inplace=True` are generally discouraged in modern pandas because they rarely improve performance or memory usage and break method chaining pipelines.
-- **Copy vs View Behavior (PyArrow/Copy-on-Write)**: In modern pandas (pandas 3.0+ defaults to Copy-on-Write), mutating a slice derived from another DataFrame without `.loc` will not modify the parent object and may raise errors. Always use `.copy()` explicitly if you intend to modify a subset independently.

@@ -1,186 +1,104 @@
-# Dash Plotly Steering Rules
+#### Plotly Dash Steering Rules
 
-## 1. Context & Tech Stack
+##### 1. Context & Tech Stack
+* **Primary Purpose:** Low-code reactive Python web framework for analytical data apps, interactive visualizations, multi-page dashboards, and MCP-enabled AI tool apps (Dash MCP).
+* **Architecture:** Flask/Werkzeug (or ASGI/WSGI server backends) + React frontend + Plotly.js graphics + reactive callback DAG.
+* **Runtime & Environment Requirements:** Python 3.9+; Dash 3.x / Dash 4.x (`pip install "dash>=4"` for redesigned WCAG 2.2 Dash Core Components and React 18/19 runtime). Optional `orjson` for accelerated callback JSON serialization, `dash-ag-grid` for large tabular datasets, Celery/Diskcache for background callbacks.
 
-- **Primary Purpose**: Dash is an open-source low-code Python framework developed by Plotly for rapidly building interactive, analytical web applications [1, 19]. It integrates Plotly.js for interactive visualizations, React.js for UI rendering, and Flask for backend routing and middleware execution.
-- **Core Use Cases**:
-  - Analytical dashboards, data visualization platforms, and reporting systems [1].
-  - Interactive grid manipulation, styling, and server-side filtering using Dash AG Grid [4, 5] and Dash DataTable [7].
-  - Scientific visualizers such as biological network graphs (Dash Bio) [8] and 3D graphics (Dash VTK) [9].
-- **Runtime & Environment Requirements**:
-  - Python 3.x backend environment.
-  - Integration support with Jupyter notebooks (via `jupyter-dash` or workspace integrations) [17], Databricks Notebooks [13], and production ASGI/WSGI servers like Gunicorn.
+##### 2. Do's and Don'ts (Strict Rules)
+* **DO:**
+  * Import all core primitives from the unified top-level namespace: `from dash import Dash, dcc, html, Input, Output, State, callback, ctx, Patch, no_update, MATCH, ALL`.
+  * Instantiate the application with `Dash(__name__)` so static assets (`assets/` directory) resolve deterministically across deployment environments, and expose `server = app.server` for WSGI production runners (e.g., Gunicorn).
+  * Start the local dev server with `app.run(debug=True)`.
+  * Keep callbacks pure and stateless: share user/session state across callbacks using `dcc.Store` (memory/session/local) or server-side caches (Redis), never global Python variables.
+  * Use `Patch()` for partial property updates (e.g., appending traces or updating figure layout properties) instead of re-serializing entire figures or large dicts.
+  * Use `ctx.triggered_id` to inspect which input triggered a multi-input callback.
+  * Use `background=True` callbacks with a `DiskcacheManager` or `CeleryManager` for long-running computations, and `dash-ag-grid` (`dag.AgGrid`) over `dash_table.DataTable` for large production tables.
+  * Use `clientside_callback` for lightweight, zero-latency browser-side UI updates.
+* **DON'T:**
+  * Do not call `app.run_server(...)` (removed in Dash 3.0+; use `app.run(...)`).
+  * Do not use legacy standalone imports (`import dash_core_components`, `import dash_html_components`, `import dash_table`).
+  * Do not use `@app.long_callback` (removed in Dash 3.0+; use `@callback(..., background=True)`).
+  * Do not mutate global variables or in-memory DataFrames inside callbacks; concurrent users/workers will experience race conditions and state corruption.
+  * Do not register multiple callbacks targeting the exact same `(component_id, property)` output without explicitly setting `allow_duplicate=True` AND `prevent_initial_call=True` (or `"initial_duplicate"`).
 
-## 2. Do's and Don'ts (Strict Rules)
-
-### DO
-
-- **Structure App around Layout and Callbacks**: Construct the interface using hierarchical layouts (`html.Div`, `dcc.Graph`) and define interactions explicitly through declarative `@callback` (or `@app.callback`) decorators [1, 20].
-- **Use the Correct Component Library**: Use **Dash AG Grid** for robust, highly interactive, high-performance tabular layouts [4, 5], **Dash Core Components (dcc)** for form inputs and interactive elements [3, 20], and **Dash HTML Components** for raw DOM tag definitions [3, 21].
-- **Optimize with Clientside Callbacks**: Write clientside callbacks in JavaScript to execute simple UI updates or fast mathematical calculations directly on the client browser, minimizing network roundtrips [1, 20].
-- **Define Pattern-Matching Callbacks**: Use pattern-matching callback signatures (`ALL`, `MATCH`, `ALLSMALLER`) to dynamically bind callbacks to components generated on-the-fly [1, 20].
-- **Leverage Background Callbacks**: Offload long-running operations or database queries to background callbacks using Celery or disk caching to prevent freezing the server's main thread [1, 16, 20].
-- **Adopt Flexible Callback Signatures**: Use type annotations and flexible parameter bindings (like `Input`, `Output`, `State`) directly in your callback functions to clean up multi-input structures [1, 20].
-
-### DON'T
-
-- **Do Not Modify Global Variables Inside Callbacks**: Callbacks must be stateless and must never modify global state variable instances. Modifying globals causes race conditions and data corruption when multiple users access the app concurrently.
-- **Do Not Use Deprecated Libraries**: Do not rely on deprecated component libraries such as **Dash User Analytics** or **Chatbot Builder** [12]. Use modern equivalents or integration patterns.
-- **Do Not Return Full Datasets Over Callbacks**: Avoid sending large pandas DataFrames directly through callback outputs. Use **Dash Store (`dcc.Store`)** or background caching to store and transfer lightweight JSON-serialized data [1, 3, 20].
-- **Do Not Duplicate Callback Outputs**: Avoid declaring multiple callbacks that target the same `Output` property of a component, unless specifically using duplicate output configurations supported in newer Dash versions [1, 20].
-
-## 3. Core API Signatures & Cheatsheet
-
-### Critical Core Interfaces
-
-- **App Initializer**:
-
-  ```python
-  import dash
-  app = dash.Dash(__name__, external_stylesheets=[...])
-  ```
-
-- **Callback Decorator**:
-
-  ```python
-  from dash import callback, Input, Output, State
-  # @callback registers dynamic property updates based on user inputs
-  ```
-
-- **Clientside Callback**:
-
-  ```python
-  from dash import clientside_callback, ClientsideFunction
-  # Executes raw JS logic inside the client browser session
-  ```
-
-- **Graph Component**:
-
-  ```python
-  from dash import dcc
-  # dcc.Graph(id="graph-id", figure=fig) renders responsive Plotly.js charts
-  ```
-
-### Idiomatic Code Snippets
-
-#### 1. A Minimal Interactive Dash App
+##### 3. Core API Signatures & Cheatsheet
+* `Dash(name: str, *, use_pages: bool = False, external_stylesheets: list[str | dict] | None = None, suppress_callback_exceptions: bool = False, background_callback_manager: BaseBackgroundCallbackManager | None = None)`
+* `@callback(*args, prevent_initial_call: bool | Literal["initial_duplicate"] = False, running: list[tuple[Output, Any, Any]] | None = None, background: bool = False, on_error: Callable[[Exception], Any] | None = None)`
+* `Output(component_id: str | dict, component_property: str, allow_duplicate: bool = False)`
+* `Input(component_id: str | dict, component_property: str)`
+* `State(component_id: str | dict, component_property: str)`
+* `Patch()` -> supports item/attribute assignment, `.append()`, `.extend()`, `.clear()`, `del` for partial prop updates.
+* `dash.register_page(module: str, *, path: str | None = None, name: str | None = None)` (used with `dash.page_container` when `use_pages=True`).
 
 ```python
-from dash import Dash, dcc, html, Input, Output, callback
+from dash import Dash, Input, Output, Patch, State, callback, ctx, dcc, html, no_update
+from dash.exceptions import PreventUpdate
 import plotly.express as px
 
 app = Dash(__name__)
+server = app.server
 
-# Hierarchical layouts defined cleanly using component trees
+df = px.data.gapminder()
+
 app.layout = html.Div([
-    html.H1("Dynamic Plotly Chart"),
     dcc.Dropdown(
-        id="dropdown-selection",
-        options=[{"label": x, "value": x} for x in ["Gold", "Silver", "Bronze"]],
-        value="Gold"
+        id="country-select",
+        options=sorted(df["country"].unique()),
+        value="Indonesia",
+        clearable=False,
     ),
-    dcc.Graph(id="indicator-graph")
+    html.Button("Highlight Peak", id="highlight-btn", n_clicks=0),
+    dcc.Graph(id="gdp-graph"),
 ])
 
 @callback(
-    Output("indicator-graph", "figure"),
-    Input("dropdown-selection", "value")
+    Output("gdp-graph", "figure"),
+    Input("country-select", "value"),
 )
-def update_graph(selected_value):
-    # Stateful filter calculations over clean inputs
-    fig = px.bar(x=["A", "B", "C"], y=[10, 15, 8], title=f"Visualizing {selected_value}")
-    return fig
+def update_graph(country: str):
+    if not country:
+        raise PreventUpdate
+    filtered = df[df["country"] == country]
+    return px.line(filtered, x="year", y="gdpPercap", title=f"{country} GDP per Capita")
+
+@callback(
+    Output("gdp-graph", "figure", allow_duplicate=True),
+    Input("highlight-btn", "n_clicks"),
+    prevent_initial_call=True,
+)
+def update_title_color(n_clicks: int):
+    if ctx.triggered_id != "highlight-btn" or not n_clicks:
+        return no_update
+    patched_figure = Patch()
+    patched_figure["layout"]["title"]["font"] = {"color": "crimson"}
+    return patched_figure
 
 if __name__ == "__main__":
     app.run(debug=True)
 ```
 
-#### 2. Advanced Pattern-Matching Callbacks
-
 ```python
-from dash import Dash, html, dcc, Input, Output, State, MATCH, ALL, callback
-
-app = Dash(__name__)
-
-app.layout = html.Div([
-    html.Button("Add Filter", id="add-filter-btn", n_clicks=0),
-    html.Div(id="filters-container", children=[]),
-    html.Div(id="output-container")
-])
+from dash import ALL, Input, Output, callback, ctx, html
 
 @callback(
-    Output("filters-container", "children"),
-    Input("add-filter-btn", "n_clicks"),
-    State("filters-container", "children")
+    Output("summary-out", "children"),
+    Input({"type": "filter-input", "index": ALL}, "value"),
 )
-def add_filter(n_clicks, current_filters):
-    # Generates a dynamic dropdown matching a specific schema pattern
-    new_filter = dcc.Dropdown(
-        id={"type": "dynamic-filter", "index": n_clicks},
-        options=[{"label": f"Option {i}", "value": i} for i in range(1, 4)]
-    )
-    current_filters.append(new_filter)
-    return current_filters
-
-@callback(
-    Output("output-container", "children"),
-    Input({"type": "dynamic-filter", "index": ALL}, "value")
-)
-def aggregate_filters(values):
-    # Intercepts outputs from ALL dynamically matched filters
-    selected = [val for val in values if val is not None]
-    return f"Selected values: {selected}"
+def summarize_dynamic_inputs(values: list[str | None]) -> str:
+    triggered = ctx.triggered_id
+    active = [v for v in values if v]
+    return f"Triggered by {triggered}; active count: {len(active)}"
 ```
 
-#### 3. High-Performance Tabular Display using Dash AG Grid
+##### 4. Error Handling & Edge Cases
+* **Official Exception Pattern:**
+  * Raise `dash.exceptions.PreventUpdate` to abort updating *all* outputs of a callback cleanly without raising an error in the UI.
+  * Return `dash.no_update` for individual outputs in a multi-output callback when only a subset of outputs should change.
+  * Use `on_error=handler_fn` in `@callback(...)` or global `Dash(..., on_error=global_handler)` (Callback Error Handlers) to intercept callback exceptions and call `set_props(component_id, props_dict)` to display user-friendly error notifications.
+* **Edge Cases & Gotchas:**
+  * **Dynamic Layouts:** Components added dynamically via callbacks do not exist in the initial layout; set `suppress_callback_exceptions=True` or use `app.validation_layout` to avoid initial callback validation errors.
+  * **Multi-Output Return Shape:** When multiple `Output`s are passed as a list/tuple, the callback must return a tuple/list of matching length; a single `Output` wrapped in a 1-element list requires returning a 1-element list/tuple.
+  * **JSON Serialization:** All callback inputs/outputs and `dcc.Store` data must be JSON-serializable; serialize DataFrames as records (`df.to_dict("records")`) or store server-side with a cache key in `dcc.Store`.
 
-```python
-from dash import Dash, html
-import dash_ag_grid as dag
-import pandas as pd
-
-df = pd.DataFrame({
-    "make": ["Toyota", "Ford", "Porsche"],
-    "model": ["Corolla", "F-150", "Boxster"],
-    "price": [25000, 45000, 72000]
-})
-
-app = Dash(__name__)
-
-app.layout = html.Div([
-    dag.AgGrid(
-        id="ag-grid-table",
-        rowData=df.to_dict("records"),
-        columnDefs=[{"field": col} for col in df.columns],
-        defaultColDef={"resizable": True, "sortable": True, "filter": True},
-        columnSize="sizeToFit",
-    )
-])
-```
-
-## 4. Error Handling & Edge Cases
-
-### Exception & Error Handling Patterns
-
-- **PreventUpdate Exception**: To halt a callback dynamically under specific conditions without raising an unhandled stack trace or updating target layouts, raise `PreventUpdate`:
-
-  ```python
-  from dash.exceptions import PreventUpdate
-  
-  @callback(
-      Output("output-div", "children"),
-      Input("btn", "n_clicks")
-  )
-  def handle_click(n_clicks):
-      if n_clicks is None or n_clicks == 0:
-          raise PreventUpdate
-      return f"Button clicked {n_clicks} times"
-  ```
-
-- **Callback Error Handlers**: Custom global error handlers can be registered to intercept uncaught backend or validation exceptions, preventing application crashes [1, 20].
-
-### Known Limitations & Common Gotchas
-
-- **Initial App Callback Trigger**: By default, Dash triggers all callbacks during application startup to establish structural consistency [1, 20]. Pass `prevent_initial_call=True` to the `@callback` decorator properties to disable this behavior.
-- **Multithreading Thread-Safety**: Global variables must be treated as **read-only**. Any state changes must happen inside browser memory elements (`dcc.Store`) or external, thread-safe session backends (Redis caching) [1, 16, 20].
-- **Circular Callback Dependencies**: Declaring a loop where Callback A outputs to Component B, and Callback B outputs back to Component A will raise a runtime circular dependency error. Design architectures as unidirectional pipelines.
+---
