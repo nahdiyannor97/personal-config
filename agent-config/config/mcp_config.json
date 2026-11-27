@@ -1,1 +1,17 @@
-{}
+{
+  "mcpServers": {
+    "graphify": {
+      "command": "uvx",
+      "args": [
+        "--python",
+        "3.12",
+        "--from",
+        "graphifyy",
+        "graphify-mcp"
+      ],
+      "env": {
+        "GRAPHIFY_LOCAL_ONLY": "true"
+      }
+    }
+  }
+}
