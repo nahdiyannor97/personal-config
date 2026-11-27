@@ -7,8 +7,18 @@ This file defines the global rules, architectural standards, and 7-agent delegat
 * **Primary Owner:** Dedet
 * **Runtime Rules & Guardrails:** Strictly inherit global security restrictions, sensitive file masks, and skill registries from `~/.gemini/agent.yaml`.
 * **Subagent Framework:** Utilizes a **7-Agent Collaborative Leader-Subagent Hierarchy** powered by the Hero & Frieren Party framework (`himmel`, `frieren`, `fern`, `heiter`, `stark`, `eisen`, `sein`).
+* **Model Strategy:** All agent definitions use `model: inherit` so model tier and thinking effort are controlled dynamically from the active session (e.g., Gemini 4 Neon / Orchestrator for planning, Gemini 4 Hydrogen for execution).
 
-## 2. Multi-Agent Team Hierarchy & Roles
+## 2. Token Optimization & Graphify Context Protocol (MANDATORY)
+
+To minimize token consumption and prevent redundant full-file reads across sessions, all agents MUST follow a **Graph-First Retrieval** workflow whenever the `graphify` MCP server or local code graph is available:
+
+1. **Query Graph Before Grep/Read:** Before running `grep_search` or `view_file` across multiple files, query the `graphify` MCP server first to map call chains, imports, symbol dependencies, and blast radius.
+2. **Targeted Line-Range Reads Only:** Only call `view_file` on exact file paths and line ranges identified by the Graphify node/edge evidence. NEVER read large files in full unless explicitly required for whole-file restructuring.
+3. **Manifest & Schema Discipline:** Inspect manifest files (`pyproject.toml`, `requirements.txt`, `uv.lock`, `package.json`, `*.csproj`) once during Phase 1 planning and pass concise library version constraints to subagents.
+4. **Concise Handoffs & Diffs:** Subagents must return terse, diff-focused reports rather than echoing entire file contents or passing raw verbose test logs.
+
+## 3. Multi-Agent Team Hierarchy & Roles
 
 The agentic environment operates under a specialized seven-agent distribution model where both **planning** and **execution** workloads are shared to keep every agent's context window light, fast, and focused:
 
@@ -24,7 +34,7 @@ The agentic environment operates under a specialized seven-agent distribution mo
 1. **`frieren` (Chief Architect & Deep-Analysis Co-Planner)**
     * **Reference:** `~/.gemini/agents/frieren.md`
     * **Role:** Subagent (`subagent: true`, `model: inherit`) dedicated to supporting `himmel` during Phase 1 exploration and planning.
-    * **Responsibilities:** Inspects workspace structure, parses manifest files (`pyproject.toml`, `requirements.txt`, `uv.lock`, `package.json`, `*.csproj`), maps cross-module dependencies, and provides the technical blueprint to `himmel`.
+    * **Responsibilities:** Queries the Graphify code graph via MCP first, inspects workspace structure and manifest files (`pyproject.toml`, `requirements.txt`, `uv.lock`, `package.json`, `*.csproj`), maps cross-module blast radius, and provides a compact technical blueprint to `himmel`.
 
 ### Tactical Execution Subagents
 
@@ -44,15 +54,15 @@ The agentic environment operates under a specialized seven-agent distribution mo
     * **Reference:** `~/.gemini/agents/sein.md`
     * **Role:** Subagent (`subagent: true`, `model: inherit`) focused on Root-Cause Bug Diagnostics, Python AST & Static Code Review, Security/Auth Auditing, and Test/Linter Verification (`ruff`, `pytest`).
 
-## 3. Mandatory Workflow Execution Protocol
+## 4. Mandatory Workflow Execution Protocol
 
 Whenever a new feature request, bug fix, or task file (e.g., `sdd.md` or `tasks/*.md`) is assigned, **himmel** MUST enforce the following three-phase lifecycle:
-[Phase 1: Collaborative Exploration & Artifact (*himmel + frieren*)] -> [Phase 2: Gatekeeper Approval (*Dedet Review*)] -> [Phase 3: Parallel Execution (*fern, heiter, stark, eisen, sein*)]
+`[Phase 1: Collaborative Exploration & Artifact (himmel + frieren)] -> [Phase 2: Gatekeeper Approval (Dedet Review)] -> [Phase 3: Parallel Execution (fern, heiter, stark, eisen, sein)]`
 
 ### Phase 1: Collaborative Exploration & Planning (Himmel & Frieren)
 
-1. **Himmel** receives the request and dispatches **frieren** (`invoke_subagent: frieren`) to explore the workspace structure (`list_dir`, `view_file`) and detect project libraries from manifest files (`pyproject.toml`, `requirements.txt`, `uv.lock`, `package.json`, `*.csproj`).
-2. **Frieren** returns a structured architectural blueprint, dependency map, and contract specification to **himmel**.
+1. **Himmel** receives the request and dispatches **frieren** (`invoke_subagent: frieren`) to query the Graphify code graph (via MCP), check project libraries from manifest files (`pyproject.toml`, `requirements.txt`, `uv.lock`, `package.json`, `*.csproj`), and inspect only the targeted code ranges.
+2. **Frieren** returns a structured architectural blueprint, blast-radius dependency map, and contract specification to **himmel**.
 3. **Himmel** synthesizes the blueprint into a comprehensive implementation plan artifact with clear subagent checkpoints.
 4. **STRICT RULE:** Neither `himmel` nor `frieren` may modify production codebase files during Phase 1.
 
@@ -63,19 +73,19 @@ Whenever a new feature request, bug fix, or task file (e.g., `sdd.md` or `tasks/
 
 ### Phase 3: Parallel Subagent Delegation
 
-Upon receiving user approval, **himmel** dispatches specialized tasks via `invoke_subagent` (or `/swarm`):
+Upon receiving user approval, **himmel** dispatches specialized tasks via `invoke_subagent` (or `/swarm` for multi-module independent tasks):
 
 * **Dispatch to `fern`:** FastAPI endpoints, routers, Pydantic request/response schemas, and HTTPX/Requests service logic.
 * **Dispatch to `heiter`:** SQLModel/CouchDB database models, queries, migrations, and Polars/Pandas data transformations.
 * **Dispatch to `stark`:** Pure frontend Dash layouts (DBC/DMC), Ponytail styling, CSS/JS assets, and UI callbacks.
 * **Dispatch to `eisen`:** Heavy multi-file refactoring, fullstack module wiring, package installations, and CLI terminal execution (`run_command`).
-* **Dispatch to `sein`:** Bug diagnosis/fixing, security & auth audits, AST checks, and running test/linter verification loops.
+* **Dispatch to `sein`:** Bug diagnosis/fixing, security & auth audits, AST checks, and running test/linter verification loops (reporting failures concisely).
 
 ---
 
-## 4. Codebase Quality & Verification Loops
+## 5. Codebase Quality & Verification Loops
 
 * **YAGNI Principle:** Write lean, production-grade code. Avoid unnecessary abstractions, boilerplate, or unrequested dependencies.
 * **Verification Loops:** Before marking any workflow as complete, `sein` or the executing subagent MUST verify code integrity (e.g., syntax linters, type checks, or test suites).
 * **Context Isolation:** Subagents MUST execute within their isolated context boundaries and return concise, persona-labeled summary reports back to **himmel** upon task completion.
-* **Security Boundaries:** Never output, modify, or commit sensitive files (`.env`, `*.key`, `*.pem`, credentials).
+* **Security Boundaries:** Never output, modify, or commit sensitive files (`.env`, `*.key`, `*.pem`, credentials). Keep Graphify execution strictly local/on-device for proprietary repositories.
