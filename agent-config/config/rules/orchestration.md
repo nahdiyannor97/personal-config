@@ -11,12 +11,13 @@ This file defines the global rules, architectural standards, and 7-agent delegat
 
 ## 2. Token Optimization & Graphify Context Protocol (MANDATORY)
 
-To minimize token consumption and prevent redundant full-file reads across sessions, all agents MUST follow a **Graph-First Retrieval** workflow whenever the `graphify` MCP server or local code graph is available:
+To minimize token consumption and prevent redundant full-file reads across sessions, all agents MUST follow a **Graph-First Retrieval** workflow whenever `graphify-out/graph.json` is present in the workspace:
 
-1. **Query Graph Before Grep/Read:** Before running `grep_search` or `view_file` across multiple files, query the `graphify` MCP server first to map call chains, imports, symbol dependencies, and blast radius.
-2. **Targeted Line-Range Reads Only:** Only call `view_file` on exact file paths and line ranges identified by the Graphify node/edge evidence. NEVER read large files in full unless explicitly required for whole-file restructuring.
-3. **Manifest & Schema Discipline:** Inspect manifest files (`pyproject.toml`, `requirements.txt`, `uv.lock`, `package.json`, `*.csproj`) once during Phase 1 planning and pass concise library version constraints to subagents.
-4. **Concise Handoffs & Diffs:** Subagents must return terse, diff-focused reports rather than echoing entire file contents or passing raw verbose test logs.
+1. **Query Graph Before Grep/Read:** Before running `grep_search` or `view_file` across multiple files, query the local graph via CLI (`graphify query "<topic>"`, `graphify affected "<symbol>"`, `graphify god-nodes`, or `graphify explain "<symbol>"`) to map call chains, imports, and blast radius.
+2. **Targeted Line-Range Reads Only:** Only call `view_file` on exact file paths and line ranges identified by the Graphify output. NEVER read large files in full unless explicitly required for whole-file restructuring.
+3. **Zero-LLM Graph Updates:** Never invoke LLM-backed extraction unless explicitly requested; rely on `graphify update .` or installed git hooks (`--code-only` AST mode).
+4. **Manifest & Schema Discipline:** Inspect manifest files (`pyproject.toml`, `requirements.txt`, `uv.lock`, `package.json`, `*.csproj`) once during Phase 1 planning and pass concise library version constraints to subagents.
+5. **Concise Handoffs & Diffs:** Subagents must return terse, diff-focused reports rather than echoing entire file contents or passing raw verbose test logs.
 
 ## 3. Multi-Agent Team Hierarchy & Roles
 
